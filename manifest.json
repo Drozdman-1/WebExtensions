@@ -1,0 +1,86 @@
+{
+  "manifest_version": 2,
+  "name": "Drozd-Tools",
+  "version": "1.0",
+  "description": "Save selection as html",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "Drozd-Tools@Pepe.com"
+    }
+  },
+  
+  "content_security_policy": "default-src 'self'",
+
+  "permissions": ["<all_urls>", "activeTab","tabs","contextMenus","downloads","menus","notifications","scripting","storage","nativeMessaging","webRequest","browserSettings","browsingData","clipboardRead","clipboardWrite"],
+
+  "icons": {
+    "48": "icons/Ext_button_blue.svg",
+    "96": "icons/Ext_button_blue.svg"
+  },
+
+  "browser_action": {
+    "default_icon": "icons/Ext_button_blue.svg",
+    "default_title": "Button addon",
+    "default_popup": "popup/pop_page.html"
+  },
+
+  "page_action": {
+    "default_icon": "icons/save.png",
+    "browser_style": true
+  },
+
+  "options_ui": {
+      "page": "options/options.html",
+      "browser_style": true,
+      "open_in_tab":true
+  },
+
+  "background": {
+    "scripts": ["background.js"]
+  },
+
+  "content_scripts": [
+		{
+			"matches": ["<all_urls>"],
+			"js": ["jquery.js"],
+			"run_at": "document_start",
+			"all_frames": true
+		},
+    {
+      "matches": ["<all_urls>"],
+      "js": ["/content_scripts/functions_misc.js"]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["/content_scripts/Xbutton.js"]
+    },
+    {
+      "matches": ["https://twitter.com/*","https://X.com/*","https://www.X.com/*","http://localhost/"],
+      "js": ["/content_scripts/content_Twit.js"]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["/content_scripts/content_Save.js"]
+    },
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["/content_scripts/content_YT.js"]
+    }
+  ],
+
+  "sidebar_action": {
+    "default_icon": "icons/Extension_button_SVG_blue.svg",
+    "default_title" : "SidebarDrozd",
+    "default_panel": "sidebar/panel.html",
+    "open_at_install": false
+  },
+
+  "commands": {
+    "_execute_sidebar_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+G"
+      }
+    }
+  }
+
+}

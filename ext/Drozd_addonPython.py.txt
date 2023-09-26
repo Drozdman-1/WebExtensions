@@ -1,0 +1,79 @@
+import ctypes  
+def Msg(text, style=0x00040000,title="title"):
+    return ctypes.windll.user32.MessageBoxW(0, text, title, style)
+
+import sys
+import json
+import struct
+import os
+import subprocess
+import threading
+
+
+def save_to_archive(filepath,data):
+    try:
+        if os.path.exists(filepath):
+            with open(filepath, 'a', encoding="utf-8") as file:
+                file.write(data)
+                file.close()
+        else:
+            os.makedirs(os.path.dirname(filepath), exist_ok=True)
+            with open(filepath, 'w', encoding="utf-8") as file:
+                file.write(data)
+                file.close()
+        sendMessage(encodeMessage({"status": "saved", "path": filepath, data: data, "type": "ping from Python script"}))
+    except Exception as e:
+        sendMessage(encodeMessage({"status": "error", "error": e, "path": filepath, data: data, "type": "ping from Python script"}))
+
+def open_file(filepath):
+    subprocess.call(filepath,shell=True)
+
+# Python 3.x version
+# Read a message from stdin and decode it.
+def getMessage():
+    rawLength = sys.stdin.buffer.read(4)
+    if len(rawLength) == 0:
+        sys.exit(0)
+    messageLength = struct.unpack('@I', rawLength)[0]
+    message = sys.stdin.buffer.read(messageLength).decode('utf-8')
+    return json.loads(message)
+
+
+def encodeMessage(messageContent):
+    encodedContent = json.dumps(messageContent, separators=(',', ':')).encode('utf-8')
+    encodedLength = struct.pack('@I', len(encodedContent))
+    return {'length': encodedLength, 'content': encodedContent}
+
+# Send an encoded message to stdout
+def sendMessage(encodedMessage):
+    sys.stdout.buffer.write(encodedMessage['length'])
+    sys.stdout.buffer.write(encodedMessage['content'])
+    sys.stdout.buffer.flush()
+
+while True:
+    receivedMessage = getMessage()
+    obj=receivedMessage
+    if "ping" in obj.keys():
+        sendMessage(encodeMessage({"status": "ping", "type": "ping from Python script"}))
+        sendMessage(encodeMessage(obj))
+    elif "open_file" in obj.keys():
+        obj=receivedMessage
+        filepath=obj["path"]
+        #open_file(filepath)
+        threading.Thread(target=lambda arg=filepath:open_file(arg)).start()
+    else:
+        obj=receivedMessage
+        data=obj["text"]
+        filepath=obj["path"]
+        save_to_archive(filepath,data)
+        sendMessage(encodeMessage(obj))
+    
+
+
+
+
+
+
+
+
+

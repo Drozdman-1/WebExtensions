@@ -1,0 +1,53 @@
+<svg width="160" height="160" viewBox="0 0 130 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter
+      id="FilterShadow"
+      filterUnits="userSpaceOnUse"
+      x="0"
+      y="0"
+      width="160"
+      height="160">
+      <!-- offsetBlur -->
+      <feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blur" />
+      <feOffset in="blur" dx="4" dy="4" result="offsetBlur" />
+
+      <!-- litPaint -->
+      <feSpecularLighting
+        in="blur"
+        surfaceScale="5"
+        specularConstant=".75"
+        specularExponent="20"
+        lighting-color="#bbbbbb"
+        result="specOut">
+        <fePointLight x="-5000" y="-10000" z="20000" />
+      </feSpecularLighting>
+      <feComposite
+        in="specOut"
+        in2="SourceAlpha"
+        operator="in"
+        result="specOut" />
+      <feComposite
+        in="SourceGraphic"
+        in2="specOut"
+        operator="arithmetic"
+        k1="0"
+        k2="1"
+        k3="1"
+        k4="0"
+        result="litPaint" />
+
+      <!-- merge offsetBlur + litPaint -->
+      <feMerge>
+        <feMergeNode in="offsetBlur" />
+        <feMergeNode in="litPaint" />
+      </feMerge>
+    </filter>
+  </defs>
+
+<g filter="url(#FilterShadow)">
+<rect x="10" y="10" width="100" height="100" rx="10" ry="10" stroke="#4E6286" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g filter="url(#FilterShadow)">
+  <path d="M 52 28 V 92" stroke="#4E6286" stroke-width="12" stroke-linecap="round"/>
+</g>
+</svg>

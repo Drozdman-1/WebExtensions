@@ -1,0 +1,254 @@
+﻿<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>DrozdTools help.</title>
+		<link rel="stylesheet" href="help.css" />
+  </head>
+
+<body>
+
+<div class="main" id="main">
+	<div class="center">
+	<h1> Drozd-Tools extension help </h1>
+	</div>
+	
+	<fieldset>
+	<legend>Note</legend>
+	<div class="note">
+		
+		This extension has been created for personal use, it includes various features packed in one.
+		<br>	
+		Though, Mozilla requires all add-ons to be signed (one cannot install unsigned add-ons). I cannot use my own add-on 
+		on Firefox without submitting it for verification. 
+		Since I'm forced to send it for verification, I can as well clean up the code and post it on <a class="link" href="https://addons.mozilla.org/">addons.mozilla.org (AMO)</a>. It might be of use to someone. Saving news articles or archiving quotes with dates and urls may be of use for sports journalists for instance.
+		<p> The features are adapted from my old extensions <b>PaleMoon</b> (XUL Firefox) and <b>Opera 12</b>.<!--  Like saving selected text as html and archiving selected text by appending it to an archive file. --></p>
+	</div>	
+	
+		<p>This addon's purpose:
+		<ul>
+    <li>archiving quotes from webpages with date and url in text format by appending an archive file</li>
+    <li>saving whole or parts of articles as html files with dates and urls</li>
+    <li>User JS, CSS Style, custom scripts, etc...</li>
+		</ul>
+		</p>	
+	</fieldset>
+	
+
+
+	<fieldset>
+	<div class="block">
+	<!-- 
+
+ -->
+
+		Extension's button should be enabled on browser toolbar 
+		(press "Extensions" button, find "DrozdTools" and on right-click menu click "Pin to Toolbar" option).
+		<p>DrozdTools' popup window contains: 
+		<br>&nbsp;<br>
+		<but>JS script</but> <but>CSS style</but> <but>Save page</but> <but>archive</but> etc. buttons<br>&nbsp;<br>
+		<but>settings</but> <but>help</but> <but>sidebar</but> <but>X-Button</but> icons
+		</p>
+		<p>Mouse-over tooltips provide some info in popup and options page.</p>
+	</div>
+	</fieldset>	
+	<br>	
+	<!-- <hr> <p></p> <br> -->
+	<br>
+	
+	
+	<fieldset>
+	<legend class="legend_title">Archive text from a webpage</legend>	
+	<p><b>Archive selected text by appending it to an archive file.</b></p>
+	<p>This feature requires <b>an external program</b>, since the new "WebExtensions" API doesn't support appending an external file as <b>Pale Moon</b> (XUL Firefox) does.</p> 
+	<p>Note: First check <a href="#install_instructions">instructions</a> on how to install the necessary external program.</p> 
+
+	<p> Select text on webpage, open popup window by clicking the extension button and press "Archive" button. The first time it's run, a file is created <cur>archive_file_1.txt"</cur> in the default location <cur>C:\archives (Drozd-addon)</cur>. Every new text will be appended to this file. Each new text is saved as a block: date & time of saving, webpage address (url), title and the selected text. Blocks are separated by a 3 empty lines.</p> 
+	<p>Three separate files are available. To change the files' names and locations, go to Settings page (Settings icon in the popup).</p> 
+	<p><b>Clicking the icon <cur>"Change popup window"</cur></b> (next to the Settings icon) <b>allows choosing which of the three popup window's versions opens next time.</b>
+	<br>● The first popup includes only one "Archive" button plus "Save page" button, "User JS button", "CSS style" icon
+	<br>● The second popup includes three "Archive" buttons, "Save page" button, "User JS script" button, "CSS style" button
+	<br>● The third popup is an extension of the second one. It also includes tags for text archives.
+	</p> 
+	<p>
+	 <b>Clicking archive buttons with modifier keys (Alt, Shift, Ctrl).</b>
+	<br>● Ctrl + Click - adds new selected text with url and title to the previous block (to the last saved text) without 3 separating empty lines	 
+	<br>● Right Click - adds new selected text only to the previous block (to the last saved text) without 3 separating empty lines
+	<br>● Alt + Click - open the archive file in an external editor
+	<br>● Shift + Click - save the text without the links included in html text 
+	<br>● Shift + Click - On Twitter: save only selected text not whole post if "Twitter spec" is selected in Settings.
+	<br>● Selected text cannot be in iframe, if there are security restrictions.
+	</p> 
+	
+	<p><br>● "---" is tags' separator in case of larger number of tags</p>
+	<!-- <h2 class="section_title">JS script, CSS style</h2> -->	
+	<br>
+	
+	<div id="install_instructions">
+		<p><b>How to install external program.</b></p> 
+		<div class="important_div">
+		<p><b>In short:</b><br> <red>Download the <a href="https://github.com/Drozdman-1/WebExtensions/releases/download/WebExtension_Drozd2/DrozdTools_app_compiled.zip"><cur1>"DrozdTools_app_compiled.zip"</cur1></a> and place the unzipped files in <cur1>"C:\Programs\Drozd_addon_Firefox\"</cur1> folder (must be created by user manually). Then double-click <cur1>"Drozd_addon NativeMessagingHosts_compiled.reg"</cur1> and confirm. This should be enough.</red>
+		</p>
+		</div>
+		
+		<p>More in details:</p>
+		
+		The <a href="#easier">easier option</a> causes fewer potential problems, so it's preferable for people not familiar with Python.
+		
+		<p>This link to my <a href="https://github.com/Drozdman-1/WebExtensions/blob/main/README.md">Github site</a> provides the necessary files and instructions for this all to work. It contains a <b>Python script</b>, extension's manifest and registry key to install.
+		This works as in this <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Native_messaging">example from Mozilla website</a>.</p>
+		<p>Download: <a href="https://github.com/Drozdman-1/WebExtensions/releases/download/WebExtension/DrozdTools_app_Python.zip"><cur1>"DrozdTools_app_Python.zip"</cur1></a>.</p>
+		<p>
+		<ul>
+		<li>Install <b>Python 3</b> programing language - <a href="https://www.python.org/downloads/">link to download</a>. During install choose the option "Add Python to PATH".</li>
+		<li>Make the registry change (added keys are <cur>HKEY_LOCAL_MACHINE\SOFTWARE\Mozilla\NativeMessagingHosts\Drozd_addon,  HKEY_CURRENT_USER\Software\Mozilla\NativeMessagingHosts\Drozd_addon</cur>) by double-clicking the "Drozd_addon NativeMessagingHosts.reg" and confirming ("Yes"). These registry keys redirect messages from Firefox to the Drozd_addon_manifest.json, which in turn redirects to external program (Python script or compiled exe file)</li>
+		<li>Files: <cur>Drozd_addon_manifest.json</cur>, <cur>Drozd_addon.bat</cur> and <cur>Drozd_addonPython.py</cur> must be placed in <cur>"C:\Programs\Drozd_addon_Firefox\"</cur> folder, which must be created by user manually. If one wants a different location of the folder and different file names, paths in those files must by changed accordingly.</li>
+		<li>To check if the extension is connected to the external program, open its popup window. If it's connected, the circle in the top-left corner of the popup is green. On connection error it turns red. Click the button to check for connection again, although browser restart is necessary after changes are made.</li>
+		<li> <a id="open_files_ext"><f>Open the files</f></span> in the browser. They can be saved and used after removing "txt" extension.
+		"Drozd_addon_manifest.json","Drozd_addon_NativeMessagingHosts.reg", "Drozd_addonPython.py", "Drozd_addon.bat".</li>
+		</ul>	
+
+		</p>
+		</ul>
+		
+		<hr>
+		
+		<h3 id="easier">Easier option.</h3>
+		<p>Download: <a href="https://github.com/Drozdman-1/WebExtensions/releases/download/WebExtension_Drozd2/DrozdTools_app_compiled.zip"><cur1>"DrozdTools_app_compiled.zip"</cur1></a>.</p>
+		<p>
+		<ul>
+			If one does not want to install the Python programing language, one can use the standalone program (compiled Python script) from my <a href="https://github.com/Drozdman-1/WebExtensions/blob/main/README.md">Github site</a> in addition to different manifest file and registry changes. 
+			<li>The zip file contains three files: <cur>"Drozd_addon_manifest_compiled.json"</cur>, <cur>"Drozd_addon NativeMessagingHosts_compiled.reg"</cur> and <cur>"Drozd_addonPython.exe"</cur>. They should be placed in <cur>"C:\Programs\Drozd_addon_Firefox\"</cur> folder (must be created by user manually).</li> 
+			<li>Double-click the "Drozd_addon NativeMessagingHosts_compiled.reg" and confirm. Restart Firefox and open popup window to check if the icon in the top-left corner is green.</li>
+		</ul>			
+		</p>	
+		
+	</div>
+	
+	</fieldset>
+	
+	
+	
+	<fieldset>
+	<legend class="legend_title"> Save selection as html </legend>
+	<!-- <h2 class="section_title"> Save selection as html </h2>	 -->
+	This feature is intended for archiving articles. 
+	<p> <b> Save selected text of a webpage as an html file.</b>
+	JS scripts, CSS styles, images, buttons, etc. can be removed, so the file size is minimized and problems with loading scripts in the saved page are avoided.</p>
+	<p>
+	 When user makes no text selection, the extension looks for special options in Settings: selectors for a specific hostname. When the addon is installed, examples are provided in Settings.
+	</p>
+	For instance, for one selector '.main':
+	<code>	
+	<pre>
+	var single_selector='.main';
+	var article=document.querySelector(single_selector);
+	range.selectNodeContents(article);
+	sel.appendChild(range.cloneContents());
+	</pre> 	
+	</code>
+	<p> Chosen elements can be removed before saving by providing their html selectors in addons' Settings. E.g.:</p>
+	<code>	
+	<pre>
+	"img, figure, form, meta, button, input, picture, video, audio, iframe, aside"
+	</pre> 	
+	</code>	
+	<p> For each added hostname a different option may be set. Otherwise '&lt;all&gt' is used for other sites (if there is no selected text).
+	For finding appropriate selector for a webpage, Firefox' right click menu Inspect is of use. 
+	<pre>
+	E.g. element with id="title" → selector "#title", 
+	element with class="title" → selector ".title"
+	element with &lt;code&gt; → selector "code"
+	</pre>
+	</p>
+	</fieldset>
+
+	<fieldset>
+	<legend class="legend_title">JS script, CSS style</legend>	
+	<!-- <h2 class="section_title">JS script, CSS style</h2> -->	
+	<p> Script in <f>"User JavaScript"</f> field in Settings will be executed after pressing <b>"JS script"</b> button in addon's popup window.</p>
+	<p> Style in <f>"CSS style"</f> field in Settings will be applied to webpage after pressing <b>"CSS style"</b> button in addon's popup window. Pressing the button again removes the style.</p>
+	<p> Both are set for a specific domain (host) or for all other sites ('&lt;all&gt').</p>
+	<p> Script can be executed after the webpage loads, if option <b>"Load X-Button after page load"</b> is selected.</p>	
+	<p> Style can be applied after the webpage loads, if option <b>"Apply CSS style after page load"</b> is selected.</p>	
+	</fieldset>
+
+
+	<fieldset>
+	<legend class="legend_title">X-Button</legend>	
+	<!-- <h2 class="section_title"> X-Button </h2>	 -->
+	<p> This is a set of custom JavaScript functions.</p>	
+	
+	<p> To launch X-Button, click the red button on addon's popup window or enable option <b>"Load X-Button after page load"</b>.</p>
+	<p>
+		After the launch, a red button with an arrow is created within webpage in the top-right corner. A menu and submenus are open on mouse-over.
+		To move button's position - right-click on the button → release → then left-click on the desired new position. </p>
+		Submenu 'Vid' by default has set video speed functions (from 1x to 2x), submenu 'Pic' has a 'fit image to screen's hight' function.
+		Submenu "▼" has Exit and Twitter last post buttons (see below).
+	<p>Functions can be defined in Settings (as JSON objects):</p>
+	<p><f>Button</f>  - function executed when main button is pressed.</p>
+	<p><f>Main menu</f>   - function executed when main menus buttons are pressed.</p>
+	<p>Function executed when corresponding submenus buttons are pressed  (as JSON objects):</p>
+	<p>
+	<f>Submenu "Vid"</f>
+	<f>Submenu "Pic"</f>
+	<f>Submenu "▼"</f>
+	<f>Misc</f>
+	</p>
+	Example:
+	<pre>
+ [
+  {
+   "bg": "blue",
+   "tit": "Video speed 1.5x",
+   "tip": "Set video speed 1.5x",
+   "func": "video_speed(1.0)"
+  },
+  {
+   "tit": "separator"
+  },
+  {
+   "tit": "Test",
+   "tip": "Test alert",
+   "func": "alert();$("div").css({'color':'green'})"
+  }
+ ]
+	</pre> 	
+
+	The object is an array of submenu objects with keys: "bg" (background), "tit" (title), "tip" (tooltip), "func" (function).
+	Background can be "green", "blue", "blue2", "viol" or omitted (default is red).
+	Functions "video_speed(speed)", "fit_image()" are build in.
+	<p><f>Misc</f>   - function executed on double click (as function text, e.g. "alert()"). 
+	[currently for Twitter page clean-up].</p>
+
+	</p>
+	</fieldset>
+	
+	<fieldset>
+	<legend class="legend_title">Other options</legend>	
+	<!-- <h2 class="section_title"> Other options </h2>	 -->
+	<li> Show save button in address bar ("page action")</li>
+	<li>"F1", "F2" keys for previous, next tab (off by default)</li>
+	<li>"1", "2" keys for previous, next tab; "3" for reload (off by default)</li>
+  <li> Twitter last post remember/highlight  (off by default)</li>
+	<p>This feature marks the last viewed post on Twitter profile, if it has been saved by user. It's useful, for example, when viewing news war reports.</p>
+	The feature adds two button to Twitter profile webpage (for every username). The 'set' button saves the selected (or topmost) post, 'last' button highlights the post if found on page. The last post is also found automatically when page is scrolled.
+	Those buttons can be disabled if X-Button is used (it includes those two).
+	It's set to remember 3 last posts by post ID and one post by the first 40 characters of the text. 
+	</fieldset>
+	
+	<fieldset>
+	<legend class="legend_title">Export/Import</legend>	
+	<!-- <h2 class="section_title"> Export/Import </h2>	 -->
+	<p> Settings can be exported and imported as a JSON file.</p>
+	</fieldset>
+
+
+</div>
+<br>
+<br>
+<br>
+
+	<script src="help.js"></script>
+</body>
+</html>

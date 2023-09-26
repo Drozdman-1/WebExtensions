@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+		<link rel="stylesheet" href="options_css.css" />
+  </head>
+
+<body>
+<div class="main"> 
+	<div class="tit_div options_block">
+		<div class="first_options" id="Sett_options"> Drozd-Tools Settings </div>
+		<a href="#Archive_options" class="link_leg">Archive text</a>
+		<a href="#save_html_options" class="link_leg">Save as html</a>
+		<a href="#JS_options" class="link_leg">User JS and CSS style</a>	
+		<a href="#X-Button_options" class="link_leg">X-Button</a>	
+		
+		<a href="#other_options1" class="link_leg">Other options</a>
+		<a href="#Exp_options" class="link_leg">Export/Import</a>
+	</div>
+	
+
+
+	<div class="options_block">		
+		<div class="other_options" id="Archive_options" title="Save selected text by appending it to an archive file."> Archive selected text 
+			<span class="text_add"> &nbsp; (this feature works only with external program - see 'Help') </span>
+			<button class="button button_save" id="arch_optS"> Save </button>
+			<button class="button button_load" id="arch_optL"> Load </button>	
+		</div>
+		<div class="row">	
+		<div class="input_butt">
+			<div>	
+			<span class="path_text"> Archive file path 1</span>	
+			<input name="archive_file_1" id="archive_file_1" type="text"  size="65" value=""/>
+			<span class="name_text"> "Button 1" name: </span>	
+			<input name="archive_file_1" id="archive_name_1" type="text"  size="15" maxlength="9" value="archive 1" class="archive_name"/>
+			</div>	
+			<br>
+			<div>
+			<span class="path_text"> Archive file path 2</span>				
+			<input name="archive_file_2" id="archive_file_2" type="text"  size="65"/>
+			<span class="name_text"> "Button 2" name: </span>	
+			<input name="archive_file_2" id="archive_name_2" type="text"  size="15" maxlength="9" value="" class="archive_name"/>
+			</div>	
+			<br>
+			<div>
+			<span class="path_text"> Archive file path 3</span>				
+			<input name="archive_file_3" id="archive_file_3" type="text"  size="65" value=""/>
+			<span class="name_text"> "Button 3" name: </span>	
+			<input name="archive_file_3" id="archive_name_3" type="text"  size="15" maxlength="9" value="" class="archive_name"/>
+			</div>	
+			<br>
+			<span class=""> Tags column 1 </span>
+			<input name="tags_1" id="tags_1" type="text"  size="65" value="" class="tags_"/>
+			<br>
+			<span class=""> Tags column 2 </span>
+			<input name="tags_2" id="tags_2" type="text"  size="65" value="" class="tags_"/>
+			<br>
+			<span class=""> Tags column 3 </span>
+			<input name="tags_3" id="tags_3" type="text"  size="65" value="" class="tags_"/>			
+			
+		</div>	
+		
+		<div>
+		<fieldset id="field_links">
+		<legend>Include links in saved text</legend>
+		
+		<input type="radio" id="text_links1" name="text_links" value="all" checked >
+		<label for="text_links1" title="Include all links (url) in selected text">all</label>
+
+		<input type="radio" id="text_links2" name="text_links" value="single">
+		<label for="text_links2" title="Include first link only in selected text">single</label>
+		
+		<input type="radio" id="text_links3" name="text_links" value="none">
+		<label for="text_links3" title="No links included in saved text">none</label>
+		
+		</fieldset>
+		</div>		
+		
+		<div class="tw_spec">
+			<span class="list_check">
+				<input type="checkbox" id="Twitter_spec" name="Twitter_spec"/>
+				<label for="Twitter_spec" class="label_options" title=""> Customized rules for Twitter posts </label>
+			</span>
+			
+			<span class="list_check">
+				<input type="checkbox" id="Twitter_sel_text" name="Twitter_sel_text"/>
+				<label for="Twitter_sel_text" class="label_options" title=' Selection of a part of the text (of a Twitter post) is needed to save whole post (and text of quoted of post) '> Twitter - select only part of text to save whole post </label>
+			</span>
+		</div>
+
+		</div>
+	</div>		
+	
+
+	<div class="tit_div options_block2">
+	<div class="first_options" id="save_html_options"  title="Save selected text of a webpage as an html file."> Save as html </div>
+	<span class="title" id="show_log">Settings for host: </span> <span class="host_show" id="host_show">la-croix.com</span>
+	</div>
+	<div class="row options_block2">
+		<div class="left_col column"> 	
+			<label for="hostnames" class="label hostnames_label" title="List of pages' hostnames for which special rules have been created. Saving without user selection, based on chosen selectors (class, id, tag).">hostnames</label>
+			<select name="hostnames" id="hostnames" size="24">
+			</select>
+		</div> 
+
+		<div class="row_txt column"> 
+			<div class="caption cap_right"><span>Save page selectors edit: </span> 
+				<button class="button button_save" id="sel_s"> Save </button>
+				<button class="button button_load" id="sel_l"> Load </button>
+			</div> 
+			<textarea id="selectors_edit" name="selectors_edit" rows="19" cols="60" spellcheck="false"></textarea>
+			
+		<div class="new_buttons">
+			<span class="templ_label"> New template: </span>
+			<button class="button2 sel_" id="sel_1"> 1 selector </button>
+			<button class="button2 sel_" id="sel_2"> 2 selectors </button>
+			<button class="button2 sel_" id="sel_3"> 3 selectors </button>
+		</div>
+
+			<div class="caption rem_label cap_right" title="Remove page elements before saving text"><span>Remove page elements: </span> 
+			</div> 
+			
+			<textarea name="del_elem" id="del_elem" rows="4" cols="60" maxlength="500" spellcheck="false"></textarea>
+		</div> 	
+
+	</div>
+	
+
+	<div class="options_block2">
+		<div class="new_label ">Add new site's hostname:</div>
+		<div class="input_butt"> 
+			<input name="new_host" id="new_host" type="text"  size="30"/>
+			<button class="button2" id="add_Host"> add </button>	
+			<button class="button2" id="del_Host"> remove </button>	
+		</div>	
+	</div>
+	
+	
+	<div> &nbsp; </div><div> &nbsp; </div>
+	<div class="options_block">		
+		<div class="first_options" id="JS_options"> User JS and CSS style 
+			<span class="text_add">(separate from the saving feature)</span>
+		</div>
+		<div class="row">		
+			<div class="row_txt column">
+				<div class="caption cap_left" title="JavaScript code executed with extension's popup button for selected host."><span>User JavaScript:</span> 
+					<button class="button button_load_JS" id="JS_l"> Load </button>
+					<button class="button button_save_JS" id="JS_s"> Save </button>
+				</div>
+				<textarea id="JS_edit" name="JS_edit" rows="35" cols="60" spellcheck="false"></textarea>
+				<!-- <div class="small"> (additional JS script, executed with a popup button, separate from the saving feature) </div> -->
+			</div>
+
+			
+			<div class="row_txt column"> 
+				<div class="caption cap_right" title="CSS style applied by extension's popup button for selected host."><span>CSS style </span> 
+					<button class="button button_save" id="css_s"> Save </button>
+					<button class="button button_load" id="css_l"> Load </button>				
+				</div>
+				<textarea id="style1" name="style1" rows="35" cols="52" spellcheck="false" autocomplete="off"></textarea>
+			</div>
+		</div>
+	</div>		
+	
+	
+	<div class="options_block X-div">
+		<div class="other_options" id="X-Button_options"> X-Button JS
+			<button class="button button_save" id="X_but_optS"> Save </button>
+			<button class="button button_load" id="X_but_optL"> Load </button>	
+		</div>
+		<div class="center">
+			<fieldset>
+			<legend>&nbsp;X-Button menus objects:&nbsp;</legend>
+			<input type="radio" id="xButton" name="x_button_menus" value="xButton" checked >
+			<label for="xButton" title="Executed on clicking main button(JSON object)">Button</label>
+			<input type="radio" id="main-menu" name="x_button_menus" value="main" checked >
+			<label for="main-menu" title="Executed on clicking menu buttons (JSON object)">Main menu</label>
+			<input type="radio" id="sub-menu1" name="x_button_menus" value="vid">
+			<label for="sub-menu1" title="Executed on clicking sub-menu buttons (JSON object)">Submenu "Vid"</label>
+			<input type="radio" id="sub-menu2" name="x_button_menus" value="pic">
+			<label for="sub-menu2" title="Executed on clicking sub-menu buttons (JSON object)">Submenu "Pic"</label>
+			<input type="radio" id="sub-menu3" name="x_button_menus" value="misc">
+			<label for="sub-menu3" title="Executed on clicking sub-menu buttons (JSON object)">Submenu "▼"</label>
+			
+			<input type="radio" id="dblClick_" name="x_button_menus" value="dblClick_">
+			<label for="dblClick_" title="Twitter page clean-up on double-click on webpage (a function, not a JSON object)" >Misc</label>
+			</fieldset>
+
+		</div>
+		<div class="row">					
+			<textarea id="X-Button_edit" name="X-Button" rows="35" cols="100" spellcheck="false"></textarea>
+		</div>		
+	</div>
+
+	
+	<div class="options_block">
+		<div class="other_options" id="other_options1"> Other options 
+			<button class="button button_save" id="other_optS"> Save </button>
+			<button class="button button_load" id="other_optL"> Load </button>	
+		</div>
+		<div class="list_check">
+			<input type="checkbox" checked id="pageAction" name="pageAction" />
+			<label for="pageAction" class="label_options">Show save button in address bar ("page action")</label>
+		</div>
+		<div class="list_check">
+			<input type="checkbox" checked id="nextTabF" name="nextTabF"/>
+			<label for="nextTabF" class="label_options" title='"F1", "F2" keys for previous, next tab (not every page due to Mozilla limitations)'> "F1", "F2" keys for previous, next tab </label>
+		</div>
+		<div class="list_check">
+			<input type="checkbox" checked id="nextTab1" name="nextTab1"/>
+			<label for="nextTab1" class="label_options" title='"1", "2" keys for previous, next tab (not every page due to Mozilla limitations)'>"1",  "2" keys for previous, next tab; "3" for reload </label>
+		</div>
+
+		<div class="list_check">
+			<input type="checkbox" checked id="loadJS" name="loadJS"/>
+			<label for="loadJS" class="label_options" title='Execute JS script when the page loads, without having to press "JS script" button'> Execute JS script after page load </label>
+		</div>
+
+		<div class="list_check">
+			<input type="checkbox" checked id="loadCSS" name="loadCSS"/>
+			<label for="loadCSS" class="label_options" title='Apply CSS style when the page loads, without having to press "CSS style" button'> Apply CSS style after page load</label>
+		</div>
+
+		<div>
+		<span class="list_check">
+			<input type="checkbox" checked id="loadX" name="loadX"/>
+			<label for="loadX" class="label_options" title='Start X-Button when the page loads, without having to press its button'> Load  X-Button after page load</label>
+		</span>
+		
+		<span class="list_check">
+			<input type="checkbox" checked id="en_X_dblclick" name="en_X_dblclick"/>
+			<label for="en_X_dblclick" class="label_options" title='Enable double-click (on webpage) function after page load ("X-Button JS"  →  "Misc" entry) - currently for Twitter clean-up'> Enable double-click function after page load (X-Button)</label>
+		</span>
+		</div>
+		<br>
+		<div>			
+		<span class="list_check">
+			<input type="checkbox" checked id="Twitter_last" name="Twitter_last"/>
+			<label for="Twitter_last" class="label_options" title='Twitter profile's last post highlight or set to remember'> Twitter last post remember/highlight</label>
+		</span>
+		<span class="list_check">
+			<input type="checkbox" checked id="Twitter_last_but" name="Twitter_last_but"/>
+			<label for="Twitter_last_but" class="label_options" title='Show "set", "last" buttons within the webpage if X-Button used(Twitter)'> Show "set", "last" buttons within page (Twitter)</label>
+		</span>
+		</div>
+	</div>
+
+	
+	<div class="options_block" id="options_exp">
+		<div class="other_options" id="Exp_options"> Export/Import </div>
+		<div class="center">
+		<button class="button button_exp" id="export_settings"> Export settings</button>
+		<div class="options_inp">
+			<button class="button button_exp" id="import_settings"> Import settings</button>
+			<input id="fileItem" type="file"/>			
+		</div>
+		</div>
+	</div>
+</div>
+
+<div class="div_3"> 
+	<button class="button button_c one" id="show_log_console" title="Show all settings in browser console"> Log settings </button>
+	<button class="button button_c two" id="clear" title="Delete all settings"> Delete all settings </button>
+</div>
+
+
+
+  <script src="constants.js"></script>
+  <script src="options.js"></script>
+</body>
+
+</html>

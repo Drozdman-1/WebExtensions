@@ -1,0 +1,128 @@
+﻿body {
+  max-width:1100px ;
+  margin:auto; 
+  background-color:#E3E0D1; 
+	background: linear-gradient(90deg, #DDDACC ,#DDDACC,#E3E0D1,#E3E0D1,#E3E0D1,#DDDACC,#DDDACC );
+}
+
+.main{
+  max-width:900px ;
+  margin:auto; 
+	font-size:17px;
+}
+.center{	text-align:center;}
+
+.block{
+	padding:10px 10px;
+	font: 400 17px/1.4em serif;
+	color:#000;
+	margin:10px auto;
+	padding:10px 10px 30px;
+}
+
+
+fieldset{
+	padding:20px 20px;
+	margin:30px 0px;
+	font: 400 17px/1.5em serif;
+}
+
+legend { 
+	padding: 5px 6px;
+	font-size:18px; 
+	font-weight:700;
+}
+
+.legend_title{
+	font-size:18px;
+	background-color:#3D2000;
+	padding: 5px 25px;
+	color:#E6EAAC;
+	border-radius:10px;
+	background: linear-gradient(0deg,RGBA(61, 32, 0, 0.8) 0%, #2B1F11 40%, #2B1F11 60%, RGBA(61, 32, 0, 0.8) 100%);
+}
+
+.section_title{
+	font-size:18px;
+	background-color:#3D2000;
+	display:inline-block;
+	padding: 5px 25px;
+	color:#E6EAAC;
+	border-radius:10px;
+	background: linear-gradient(0deg,RGBA(61, 32, 0, 0.8) 0%, #2B1F11 40%, #2B1F11 60%, RGBA(61, 32, 0, 0.8) 100%);
+}
+
+.note{
+	font: 400 13px/1.4em Verdana;
+}
+
+but{
+	background-color:#ECEBBC;
+	background-color:#50473E;
+	color:#ECECEC;
+	padding: 4px 10px;
+	border: 1px solid #000000;
+	border-radius:7px;
+	margin-top:10px;
+	margin-right:10px; 
+}
+f{
+	font-weight:700;
+	background-color:#DFDABF;
+	color:#000;
+	padding: 2px 4px;
+	border: 1px solid #999999;
+	border-radius:4px;
+	margin:10px 4px;
+}
+/* 
+code{
+	display:block;
+	font-family:Consolas;
+	word-wrap:break-word;	
+	padding-top: 8px;
+	background-color:#F2F2F2; 
+}
+ */
+pre{
+	background-color:#ECEBBC; 
+	font-family:Consolas;
+	padding-top: 8px;
+	background-color:#F2F2F2; 
+}
+
+red{color:#700000 !important; }
+
+cur{
+	font-weight:700;
+	font-style:italic;
+	font-family:Consolas;
+	color:#000;
+}
+cur1{
+	font-weight:700;
+	font-style:italic;
+	font-family:Consolas;
+}
+
+#install_instructions{
+	background-color:#EBEBE2;
+	border: 3px ridge #333;
+	padding:10px 20px;
+	margin:10px 0px;
+}
+
+#open_files_ext{
+  cursor: pointer;
+}
+
+.important_div{
+	border: 2px ridge #900000;
+	padding:0px 40px;
+}
+
+
+
+
+
+
