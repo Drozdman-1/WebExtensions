@@ -1,6 +1,8 @@
 ### WebExtensions Firefox addons. JavaScript
 # DrozdTools
 
+[https://addons.mozilla.org/addon/drozd-tools/](https://addons.mozilla.org/addon/drozd-tools/)
+
  This addon's purpose:
 + **archiving quotes from webpages with date and url in text format by appending an archive file**
 + **saving whole or parts of articles as html files with dates and urls**
