@@ -16,17 +16,17 @@
 
 ## How to install external program.
 
-**In short**: Download the [`DrozdTools_app_compiled.zip`](https://github.com/Drozdman-1/WebExtensions/releases/download/WebExtension_Drozd2/DrozdTools_app_compiled.zip) and place the unzipped files in `C:\Programs\Drozd_addon_Firefox\` folder (must be created by user manually). Then double-click `Drozd_addon NativeMessagingHosts_compiled.reg` and confirm. This should be enough.
+**In short**: Download the [`DrozdTools_app_compiled.zip`](https://github.com/Drozdman-1/WebExtensions/releases/download/Drozd_exe/DrozdTools_app_compiled.zip) and place the unzipped files in `C:\Programs\Drozd_addon_Firefox\` folder (must be created by user manually). Then double-click `Drozd_addon NativeMessagingHosts_compiled.reg` and confirm. This should be enough.
 
 More in details:
 
 **The easier option is to use a compiled script (executable)**, it causes fewer potential problems.
-The file [`DrozdTools_app_compiled.zip`](https://github.com/Drozdman-1/WebExtensions/releases/download/WebExtension_Drozd2/DrozdTools_app_compiled.zip) contains three files: `Drozd_addon_manifest_compiled.json`, `Drozd_addon NativeMessagingHosts_compiled.reg` and `Drozd_addonPython.exe`. They should be placed in `C:\Programs\Drozd_addon_Firefox\` folder (must be created by user manually).
+The file [`DrozdTools_app_compiled.zip`](https://github.com/Drozdman-1/WebExtensions/releases/download/Drozd_exe/DrozdTools_app_compiled.zip) contains three files: `Drozd_addon_manifest_compiled.json`, `Drozd_addon NativeMessagingHosts_compiled.reg` and `Drozd_addonPython.exe`. They should be placed in `C:\Programs\Drozd_addon_Firefox\` folder (must be created by user manually).
 Double-click the "Drozd_addon NativeMessagingHosts_compiled.reg" and confirm. Restart Firefox and open popup window to check if the icon in the top-left corner is green.
 
 **Using the DrozdTools with a Python script**
 
- ● Download [`DrozdTools_app_Python.zip`](https://github.com/Drozdman-1/WebExtensions/releases/download/WebExtension/DrozdTools_app_Python.zip)
+ ● Download [`DrozdTools_app_Python.zip`](https://github.com/Drozdman-1/WebExtensions/releases/download/Drozd_py/DrozdTools_app_Python.zip)
  
  ● Install Python 3 programing language. During install choose the option "Add Python to PATH".
 
