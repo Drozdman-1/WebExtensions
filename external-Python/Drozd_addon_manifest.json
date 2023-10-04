@@ -1,0 +1,7 @@
+{
+  "name": "Drozd_addon",
+  "description": "Save archives (native messaging)",
+  "path": "C:\\Programs\\Drozd_addon_Firefox\\Drozd_addon.bat",
+  "type": "stdio",
+  "allowed_extensions": ["Drozd-Tools@Pepe.com"]
+}
