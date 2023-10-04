@@ -17,6 +17,8 @@ document.querySelector("#settings").addEventListener('click',function(){
 
 document.querySelector("#help").addEventListener('click',() => { browser.tabs.create({url: 'help.html'}).then(() => { window.close()}) ;})
 
+document.querySelector("#scratchpad").addEventListener('click',scratchpadOpen)
+
 document.querySelector("#save_text_html").addEventListener('click', Save_text_)
 
 function Save_text_(){
@@ -100,12 +102,16 @@ function JS_User_exec(message){
 			var js = obj["hosts"][host0]["JS"];
 		}
 		
+		browser.runtime.sendMessage({command: "run_JS", script: js})
+		
+		/* 
     browser.tabs.query({active: true, currentWindow: true}).then((tabs) => {
 			browser.tabs.sendMessage(tabs[0].id, {
 				command: "script_eval",
 				script: js
 				})
 		})
+		 */
 	},onError)	
 }
 
@@ -215,7 +221,7 @@ function archive_add(e){
 			let links=data["archive_opt"]["links"];
 			let obj = data["archive_opt"];			
 			browser.tabs.query({active: true, currentWindow: true}).then((tabs) => {
-				browser.tabs.sendMessage(tabs[0].id, {command: "archive_text_init", which: which, tags: "", type: "add", type_2: obj , links: links})
+				browser.tabs.sendMessage(tabs[0].id, {command: "archive_text_init", which: which, tags: "", type: "add_sep", type_2: obj , links: links})
 			}).then(() => {	window.close();});
 		})
 		
@@ -246,10 +252,15 @@ function tags_selected(){
 	options.forEach(function(el){
 		if(el.selected){
 			if (el.value !== "---"){//separator
-				tags= tags + " " + "•" + el.value + "•"
+				if(el.value !== "✔" && !el.value.includes("!!")){
+					tags= tags + " " + "•" + el.value + "•"
+				}else{
+					tags= el.value + " " + tags
+				}
 			}
 		}
 	})
+	tags= tags + " ";
 	return tags
 } 
 
@@ -322,6 +333,27 @@ function reset_tags(){
 function onError(error){
   console.error(`Error: ${error}`);
 }
+
+
+function scratchpadOpen(){
+  let popupURL = browser.extension.getURL("scratchpad/Scratchpad.html");
+
+  let creating = browser.windows.create({
+    url: popupURL,
+    type: "popup",
+		titlePreface: "Scratchpad. JS, CSS",
+    height: 700,
+    width: 630,
+		left: 725,
+		top: 200
+  });
+  creating.then(onCreated, onError);
+} 
+
+function onCreated(windowInfo) {
+  //console.log(`Created window: ${windowInfo.id}`);
+}
+
 
 function a1(txt){
   browser.tabs.query({active: true, currentWindow: true}).then((tabs) => {

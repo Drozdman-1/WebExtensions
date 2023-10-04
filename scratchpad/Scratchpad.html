@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+		<link rel="stylesheet" href="scratchpad_css.css" />
+  </head>
+
+<body>
+<div class="main"> 
+	<div class="options_block">
+		<div class="title_bar" id=""> 
+		<a href="#Run_JS" class="link_leg link_leg2">JS</a>
+		<a href="#Apply_CSS" class="link_leg link_leg2">CSS</a>		
+		Scratchpad
+		</div>
+
+		<div class="run_buttons">
+			<span id="Run_JS" class="link_leg">Run JS script</span>
+		</div>
+		
+		<div class="">		
+			<div class="row_txt column">
+				<div class="caption cap_left" title="JavaScript code to be executed."><span>User JavaScript:</span> 
+					<button class="button button_load_JS" id="JS_l"> Load </button>
+					<button class="button button_save_JS" id="JS_s"> Save </button>
+				</div>
+				<textarea id="JS_edit" name="JS_edit" rows="25" cols="60" spellcheck="false"></textarea>
+
+			</div>
+
+	
+		<div class="run_buttons">
+			<span id="Apply_CSS" class="link_leg">Apply CSS</span>
+			<span id="Remove_CSS" class="link_leg">Remove CSS</span>
+		</div>
+		
+			<div class="row_txt column"> 
+				<div class="caption cap_right" title="CSS style to be applied"><span>CSS style </span> 
+					<button class="button button_save" id="css_s"> Save </button>
+					<button class="button button_load" id="css_l"> Load </button>				
+				</div>
+				<textarea id="style1" name="style1" rows="25" cols="60" spellcheck="false" autocomplete="off"></textarea>
+			</div>
+		</div>
+	</div>		
+</div>	
+	
+  <script src="scratchpad.js"></script>
+</body>
+
+</html>

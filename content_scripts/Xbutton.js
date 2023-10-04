@@ -28,7 +28,7 @@ var X_Button= {
 			let x=window.innerWidth - 60;
 			x=x + "px"
 			button_.style.left= x
-			button_.style.zIndex="9999999999999";
+			button_.style.zIndex="9999999999999999";
 			button_.style.background= bckg_butBig
 			button_.style.padding= "2px 4px 2px 2px";
 			button_.style.borderRadius="4px";
@@ -100,7 +100,7 @@ var X_Button= {
 			button_menu.id="add_button_menu";button_menu.className="my_div_JS";
 			button_menu.style.position="relative";
 			button_menu.style.top="3px";button_menu.style.right=w - 20 + "px"; 
-			button_menu.style.zIndex="112300000"; 
+			button_menu.style.zIndex="9999999999999999"; 
 			button_menu.style.background= bckg 
 			button_menu.style.padding= "6px 8px 6px 0px" ;
 			button_menu.style.borderRadius="8px";button_menu.style.border="2px solid #9C9C9C";
@@ -250,7 +250,7 @@ var X_Button= {
 			button_menu.id="add_button_menu_2_"+j;button_menu.className="add_button_menu_2 my_div_JS";
 			button_menu.style.position="absolute";//relative absolute
 			button_menu.style.top="25px";button_menu.style.right="4px";
-			button_menu.style.zIndex="112300000"; 
+			button_menu.style.zIndex="9999999999999999"; 
 			button_menu.style.background=bckg2 
 			button_menu.style.padding= "6px 8px 6px 0px" ;
 			button_menu.style.borderRadius="8px";button_menu.style.border="2px solid #9C9C9C";

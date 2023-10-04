@@ -28,6 +28,9 @@ def save_to_archive(filepath,data):
 def open_file(filepath):
     subprocess.call(filepath,shell=True)
 
+def open_url(browser_path, filepath):
+    subprocess.call([browser_path,filepath],shell=True)    
+
 # Python 3.x version
 # Read a message from stdin and decode it.
 def getMessage():
@@ -61,6 +64,11 @@ while True:
         filepath=obj["path"]
         #open_file(filepath)
         threading.Thread(target=lambda arg=filepath:open_file(arg)).start()
+    elif "open_url" in obj.keys():
+        obj=receivedMessage
+        url=obj["path"]
+        browser_path=obj["browser_path"]
+        threading.Thread(target=lambda arg1=browser_path,arg2=url:open_url(arg1, arg2)).start()
     else:
         obj=receivedMessage
         data=obj["text"]
@@ -68,12 +76,3 @@ while True:
         save_to_archive(filepath,data)
         sendMessage(encodeMessage(obj))
     
-
-
-
-
-
-
-
-
-

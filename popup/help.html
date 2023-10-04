@@ -136,7 +136,7 @@
 	<p> <b> Save selected text of a webpage as an html file.</b>
 	JS scripts, CSS styles, images, buttons, etc. can be removed, so the file size is minimized and problems with loading scripts in the saved page are avoided.</p>
 	<p>
-	 When user makes no text selection, the extension looks for special options in Settings: selectors for a specific hostname. When the addon is installed, examples are provided in Settings.
+	 When user makes no text selection, the extension looks for special options in Settings: selectors for a specific hostname (without 'www'). When the addon is installed, examples are provided in Settings.
 	</p>
 	For instance, for one selector '.main':
 	<code>	
@@ -153,7 +153,7 @@
 	"img, figure, form, meta, button, input, picture, video, audio, iframe, aside"
 	</pre> 	
 	</code>	
-	<p> For each added hostname a different option may be set. Otherwise '&lt;all&gt' is used for other sites (if there is no selected text).
+	<p> For each added hostname (without 'www') a different option may be set. Otherwise '&lt;all&gt' is used for other sites (if there is no selected text).
 	For finding appropriate selector for a webpage, Firefox' right click menu Inspect is of use. 
 	<pre>
 	E.g. element with id="title" → selector "#title", 
@@ -168,7 +168,7 @@
 	<!-- <h2 class="section_title">JS script, CSS style</h2> -->	
 	<p> Script in <f>"User JavaScript"</f> field in Settings will be executed after pressing <b>"JS script"</b> button in addon's popup window.</p>
 	<p> Style in <f>"CSS style"</f> field in Settings will be applied to webpage after pressing <b>"CSS style"</b> button in addon's popup window. Pressing the button again removes the style.</p>
-	<p> Both are set for a specific domain (host) or for all other sites ('&lt;all&gt').</p>
+	<p> Both are set for a specific domain (without 'www') or for all other sites ('&lt;all&gt').</p>
 	<p> Script can be executed after the webpage loads, if option <b>"Load X-Button after page load"</b> is selected.</p>	
 	<p> Style can be applied after the webpage loads, if option <b>"Apply CSS style after page load"</b> is selected.</p>	
 	</fieldset>

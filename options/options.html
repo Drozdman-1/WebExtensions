@@ -20,7 +20,76 @@
 	</div>
 	
 
+	<div class="tit_div options_block2">
+	<div class="first_options" id="save_html_options"  title="Save selected text of a webpage as an html file."> Save as html </div>
+	<span class="title" id="show_log">Settings for host: </span> <span class="host_show" id="host_show">la-croix.com</span>
+	</div>
+	<div class="row options_block2">
+		<div class="left_col column"> 	
+			<label for="hostnames" class="label hostnames_label" title="List of pages' hostnames for which special rules have been created. Saving without user selection, based on chosen selectors (class, id, tag).">hostnames</label>
+			<select name="hostnames" id="hostnames" size="24">
+			</select>
+		</div> 
 
+		<div class="row_txt column"> 
+			<div class="caption cap_right"><span>Save page selectors edit: </span> 
+				<button class="button button_save" id="sel_s"> Save </button>
+				<button class="button button_load" id="sel_l"> Load </button>
+			</div> 
+			<textarea id="selectors_edit" name="selectors_edit" rows="19" cols="60" spellcheck="false"></textarea>
+			
+		<div class="new_buttons">
+			<span class="templ_label"> New template: </span>
+			<button class="button2 sel_" id="sel_1"> 1 selector </button>
+			<button class="button2 sel_" id="sel_2"> 2 selectors </button>
+			<button class="button2 sel_" id="sel_3"> 3 selectors </button>
+		</div>
+
+			<div class="caption rem_label cap_right" title="Remove page elements before saving text"><span>Remove page elements: </span> 
+			</div> 
+			
+			<textarea name="del_elem" id="del_elem" rows="4" cols="60" maxlength="500" spellcheck="false"></textarea>
+		</div> 	
+
+	</div>
+	
+
+	<div class="options_block2">
+		<div class="new_label ">Add new site's hostname:</div>
+		<div class="input_butt"> 
+			<input name="new_host" id="new_host" type="text"  size="30"/>
+			<button class="button2" id="add_Host"> add </button>	
+			<button class="button2" id="del_Host"> remove </button>	
+		</div>	
+	</div>
+	
+	
+	<div> &nbsp; </div><div> &nbsp; </div>
+	<div class="options_block">		
+		<div class="first_options" id="JS_options"> User JS and CSS style 
+			<span class="text_add">(separate from the saving feature)</span>
+		</div>
+		<div class="row">		
+			<div class="row_txt column">
+				<div class="caption cap_left" title="JavaScript code executed with extension's popup button for selected host."><span>User JavaScript:</span> 
+					<button class="button button_load_JS" id="JS_l"> Load </button>
+					<button class="button button_save_JS" id="JS_s"> Save </button>
+				</div>
+				<textarea id="JS_edit" name="JS_edit" rows="35" cols="60" spellcheck="false"></textarea>
+				<!-- <div class="small"> (additional JS script, executed with a popup button, separate from the saving feature) </div> -->
+			</div>
+
+			
+			<div class="row_txt column"> 
+				<div class="caption cap_right" title="CSS style applied by extension's popup button for selected host."><span>CSS style </span> 
+					<button class="button button_save" id="css_s"> Save </button>
+					<button class="button button_load" id="css_l"> Load </button>				
+				</div>
+				<textarea id="style1" name="style1" rows="35" cols="52" spellcheck="false" autocomplete="off"></textarea>
+			</div>
+		</div>
+	</div>		
+	
 	<div class="options_block">		
 		<div class="other_options" id="Archive_options" title="Save selected text by appending it to an archive file."> Archive selected text 
 			<span class="text_add"> &nbsp; (this feature works only with external program - see 'Help') </span>
@@ -89,77 +158,6 @@
 			</span>
 		</div>
 
-		</div>
-	</div>		
-	
-
-	<div class="tit_div options_block2">
-	<div class="first_options" id="save_html_options"  title="Save selected text of a webpage as an html file."> Save as html </div>
-	<span class="title" id="show_log">Settings for host: </span> <span class="host_show" id="host_show">la-croix.com</span>
-	</div>
-	<div class="row options_block2">
-		<div class="left_col column"> 	
-			<label for="hostnames" class="label hostnames_label" title="List of pages' hostnames for which special rules have been created. Saving without user selection, based on chosen selectors (class, id, tag).">hostnames</label>
-			<select name="hostnames" id="hostnames" size="24">
-			</select>
-		</div> 
-
-		<div class="row_txt column"> 
-			<div class="caption cap_right"><span>Save page selectors edit: </span> 
-				<button class="button button_save" id="sel_s"> Save </button>
-				<button class="button button_load" id="sel_l"> Load </button>
-			</div> 
-			<textarea id="selectors_edit" name="selectors_edit" rows="19" cols="60" spellcheck="false"></textarea>
-			
-		<div class="new_buttons">
-			<span class="templ_label"> New template: </span>
-			<button class="button2 sel_" id="sel_1"> 1 selector </button>
-			<button class="button2 sel_" id="sel_2"> 2 selectors </button>
-			<button class="button2 sel_" id="sel_3"> 3 selectors </button>
-		</div>
-
-			<div class="caption rem_label cap_right" title="Remove page elements before saving text"><span>Remove page elements: </span> 
-			</div> 
-			
-			<textarea name="del_elem" id="del_elem" rows="4" cols="60" maxlength="500" spellcheck="false"></textarea>
-		</div> 	
-
-	</div>
-	
-
-	<div class="options_block2">
-		<div class="new_label ">Add new site's hostname:</div>
-		<div class="input_butt"> 
-			<input name="new_host" id="new_host" type="text"  size="30"/>
-			<button class="button2" id="add_Host"> add </button>	
-			<button class="button2" id="del_Host"> remove </button>	
-		</div>	
-	</div>
-	
-	
-	<div> &nbsp; </div><div> &nbsp; </div>
-	<div class="options_block">		
-		<div class="first_options" id="JS_options"> User JS and CSS style 
-			<span class="text_add">(separate from the saving feature)</span>
-		</div>
-		<div class="row">		
-			<div class="row_txt column">
-				<div class="caption cap_left" title="JavaScript code executed with extension's popup button for selected host."><span>User JavaScript:</span> 
-					<button class="button button_load_JS" id="JS_l"> Load </button>
-					<button class="button button_save_JS" id="JS_s"> Save </button>
-				</div>
-				<textarea id="JS_edit" name="JS_edit" rows="35" cols="60" spellcheck="false"></textarea>
-				<!-- <div class="small"> (additional JS script, executed with a popup button, separate from the saving feature) </div> -->
-			</div>
-
-			
-			<div class="row_txt column"> 
-				<div class="caption cap_right" title="CSS style applied by extension's popup button for selected host."><span>CSS style </span> 
-					<button class="button button_save" id="css_s"> Save </button>
-					<button class="button button_load" id="css_l"> Load </button>				
-				</div>
-				<textarea id="style1" name="style1" rows="35" cols="52" spellcheck="false" autocomplete="off"></textarea>
-			</div>
 		</div>
 	</div>		
 	
@@ -244,8 +242,77 @@
 			<label for="Twitter_last_but" class="label_options" title='Show "set", "last" buttons within the webpage if X-Button used(Twitter)'> Show "set", "last" buttons within page (Twitter)</label>
 		</span>
 		</div>
-	</div>
 
+
+		
+		<br><br>
+
+		<div>
+		<span class="other_options simple">Context menu</span>
+		<span class="text_add"> (Restart required to apply changes) </span>
+		</div>
+		<br>
+		
+		<div class="list_check">
+			<input type="checkbox" checked id="add_menu" name="add_menu"/>
+			<label for="add_menu" class="label_options" title="Context menu: open webpage or link's url in another browser "> Add menu items</label>
+		</div>	
+		
+		<div class="list_check">
+			<input type="checkbox" checked id="open_in_browser" name="open_in_browser"/>
+			<label for="open_in_browser" class="label_options" title="Context menu: open webpage or link's url in another browser "> Open in another browser <span>Browser's path: </span></label>
+			
+			<input name="browser_path" id="browser_path" type="text" class="inp_menu" size="50"/>
+		</div>
+		
+		<div class="list_check">
+			<input type="checkbox" id="search_1" name="search_1"/>
+			<label for="search_1" class="label_options" title=""> Search with Google</label>
+			<input name="search_1" id="search_url_1" type="text" class="inp_menu" size="50"/>
+		</div>
+
+		<div class="list_check">
+			<input type="checkbox" id="search_2" name="search_"/>
+			<label for="search_2" class="label_options" title=""> Search with Google.pl </label>
+			<input name="search_2" id="search_url_2" type="text" class="inp_menu" size="50"/>
+		</div>
+		
+		<div class="list_check">
+			<input type="checkbox" id="search_3" name="search_3"/>
+			<label for="search_3" class="label_options" title=""> Search with Yahoo</label>
+			<input name="search_3" id="search_url_3" type="text" class="inp_menu" size="50"/>
+		</div>			
+		
+		<div class="list_check">
+			<input type="checkbox" id="search_4" name="search_4"/>
+			<label for="search_4" class="label_options" title=""> Search with Bing</label>
+			<input name="search_4" id="search_url_4" type="text" class="inp_menu" size="50"/>
+		</div>
+		
+		<div>
+			<span class="list_check">
+				<input type="checkbox" checked id="menu_arch" name="menu_arch"/>
+				<label for="menu_arch" class="label_options small" title='Add "save to archives" to right-click context menu'> Add save to archives </label>
+			</span>
+			
+			<span class="list_check">
+				<input type="checkbox" checked id="menu_arch_add" name="menu_arch_add"/>
+				<label for="menu_arch_add" class="label_options small" title='Add additional options to "save to archives" to right-click context menu'> Add additional options "save to archives" </label>
+			</span>
+			
+			<span class="list_check">
+				<input type="checkbox" checked id="menu_open_arch" name="menu_open_arch"/>
+				<label for="menu_open_arch" class="label_options small" title='Add "open archive files" to right-click context menu'> Add open archive files</label>
+			</span>
+		</div>
+		
+
+
+
+		
+	</div>
+	
+	
 	
 	<div class="options_block" id="options_exp">
 		<div class="other_options" id="Exp_options"> Export/Import </div>

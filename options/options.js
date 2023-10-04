@@ -27,10 +27,12 @@ document.querySelector("#clear").addEventListener('click',() => {
 	}
 })
  
-Array.prototype.forEach.call(document.querySelectorAll('#show_log_console, #show_log, #Sett_options'), function(elem){
-	elem.addEventListener('click',log_host_storage)
+ 
+Array.prototype.forEach.call(document.querySelectorAll('#show_log_console, #Sett_options'), function(elem){
+	elem.addEventListener('click', show_settings)
 }); 
  
+document.querySelector("#show_log").addEventListener('click', log_host_storage)
 
 
 document.querySelector("#export_settings").addEventListener('click',	export_settings)
@@ -54,7 +56,7 @@ function update_options(){
 			browser.storage.local.set(data);
 			console.log("first, set defaults ") ;
 			
-			var options = [host0, host1, host2, host3, host4];
+			var options = [host0, host1, host2, host3, host4, host5, host6];
 			options.forEach((host, i) => {
 				if(i===0){
 					s[i] = new Option(host, host, false, true);
@@ -62,7 +64,9 @@ function update_options(){
 					s[i] = new Option(host, host, false, false); 
 				}
 			});
-
+			
+			browser.runtime.sendMessage({command: "context_menu_make"})
+			
 		}else{
 			var options = Object.keys(data["hosts"])
 			options.forEach((host, i) => {
@@ -110,7 +114,24 @@ function update_options(){
 		document.querySelector("#Twitter_last").checked = data["Twitter_last"];		
 		document.querySelector("#Twitter_last_but").checked = data["Twitter_last_but"];				
 		
+		document.querySelector("#add_menu").checked = data["contextMenu"]["add_menu"];
+		document.querySelector("#menu_arch").checked = data["contextMenu"]["save_archives"];
+		document.querySelector("#menu_arch_add").checked = data["contextMenu"]["add"];
+		document.querySelector("#menu_open_arch").checked = data["contextMenu"]["open_files"];		
+		
+		document.querySelector("#open_in_browser").checked = data["contextMenu"]["open_in_browser"]["on"];
+		document.querySelector("#browser_path").value = data["contextMenu"]["open_in_browser"]["filepath"];
+		
+		data["contextMenu"]["search"].forEach((el,i) => {
+			if(i<4){
+				document.querySelector("#search_" + (i +1) ).checked = el["on"];
+				document.querySelector('label[for="search_' + (i +1) + '"]').innerText = el["title"];
+				document.querySelector("#search_url_" + (i +1) ).value = el["url"];
+			}
+		})
 	}, onError);
+
+	document.querySelector("#new_host").value =""
 }
 
 
@@ -244,6 +265,14 @@ function save_set(){
 		let Twitter_last = document.querySelector("#Twitter_last").checked;		
 		let Twitter_last_but = document.querySelector("#Twitter_last_but").checked;				
 
+		let add_menu = document.querySelector("#add_menu").checked;
+		let menu_save_archives = document.querySelector("#menu_arch").checked
+		let menu_arch_add = document.querySelector("#menu_arch_add").checked
+		let menu_arch_open_files =	document.querySelector("#menu_open_arch").checked
+
+		let menu_open_browser = document.querySelector("#open_in_browser").checked
+		let menu_browser_path = document.querySelector("#browser_path").value
+		
 		let getStorage = browser.storage.local.get();
 		getStorage.then(data => {
 			if (!data.init){
@@ -265,6 +294,22 @@ function save_set(){
 			data["en_X_dblclick"] = en_X_dblclick;
 			data["Twitter_last"] = Twitter_last;
 			data["Twitter_last_but"] = Twitter_last_but;
+			
+			data["contextMenu"]["add_menu"] = add_menu;
+			data["contextMenu"]["save_archives"] = menu_save_archives;
+			data["contextMenu"]["add"] = menu_arch_add;
+			data["contextMenu"]["open_files"] =	menu_arch_open_files;
+			data["contextMenu"]["open_in_browser"]["on"]=menu_open_browser; 
+			data["contextMenu"]["open_in_browser"]["filepath"]=menu_browser_path;
+			
+			for(var i=0;i<4;i++){
+				let obj={};
+				obj["on"] = document.querySelector("#search_" + (i +1) ).checked;
+				obj["title"] = document.querySelector('label[for="search_' + (i +1) + '"]').innerText;
+				obj["url"] = document.querySelector("#search_url_" + (i +1) ).value;
+				data["contextMenu"]["search"][i] = obj;
+			}			
+			
 			browser.storage.local.set(data);
 			
 			browser.runtime.sendMessage({command: "toggle_pageAction"});
@@ -393,6 +438,24 @@ function load_set(){
 				document.querySelector("#en_X_dblclick").checked = data["en_X_dblclick"];
 				document.querySelector("#Twitter_last").checked = data["Twitter_last"];	
 				document.querySelector("#Twitter_last_but").checked = data["Twitter_last_but"];	
+
+				document.querySelector("#add_menu").checked = data["contextMenu"]["add_menu"];
+				document.querySelector("#menu_arch").checked = data["contextMenu"]["save_archives"];
+				document.querySelector("#menu_arch_add").checked = data["contextMenu"]["add"];
+				document.querySelector("#menu_open_arch").checked = data["contextMenu"]["open_files"];		
+				
+				document.querySelector("#open_in_browser").checked = data["contextMenu"]["open_in_browser"]["on"];
+				document.querySelector("#browser_path").value = data["contextMenu"]["open_in_browser"]["filepath"];
+
+				data["contextMenu"]["search"].forEach((el,i) => {
+					console.log('*** ',el,i) 
+					if(i<4){
+						document.querySelector("#search_" + (i +1) ).checked = el["on"];
+						document.querySelector('label[for="search_' + (i +1) + '"]').innerText = el["title"];
+						document.querySelector("#search_url_" + (i +1) ).value = el["url"];
+					}
+				})
+				
 			}
 		},onError);
 
@@ -461,12 +524,6 @@ document.addEventListener("mouseup", (e) => {
 	}
 });
 
-function log_host_storage_host1(){
-	let host=document.querySelector("#hostnames").value;
-	browser.storage.local.get().then((data) =>{
-		console.log(host + " : " , data["hosts"][host]);
-	},onError)
-}
 
 function log_host_storage_host(){
 	//let host=document.querySelector("#hostnames").value;
@@ -496,6 +553,16 @@ function log_host_storage(){
 		}	
 	},onError)
 }
+
+
+function show_settings(){
+	console.log("log settings");
+	browser.storage.local.get().then((data) =>{
+		console.log(data);
+	},onError)
+}
+
+
 
 
 function export_settings(error){

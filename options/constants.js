@@ -73,7 +73,7 @@ range.selectNodeContents(article);
 sel.appendChild(range.cloneContents());
 title=title.replace('','')`;  //pbs
 
-const sel_examp_del_1=`'img, figure, form, meta, button, input, picture, video, audio, iframe, aside, .post__col-left, .post__byline, .sidebar'`
+const sel_examp_del_1=`'img, svg, figure, form, meta, button, input, picture, video, audio, iframe, aside, .post__col-left, .post__byline, .sidebar'`
 
 //=============================
 const sel_examp_3 = `
@@ -106,7 +106,7 @@ sel_text.appendChild(range2.cloneContents());
 range3.selectNodeContents(art_text);
 sel_text2.appendChild(range3.cloneContents());` //npr
 
-const sel_examp_del_2=`'img, figure, form, button, input, picture, video, audio,iframe'`
+const sel_examp_del_2=`'img, svg, figure, form, button, input, picture, video, audio,iframe'`
 
 //=============================
 
@@ -118,10 +118,10 @@ range.selectNodeContents(article);
 sel.appendChild(range.cloneContents());
 title=title.replace('','')`;  //croix
 
-const sel_examp_del_4=`'img, figure, form, meta, button, input, picture, video, audio, iframe,.nw-artical-paths,.nw-artical-coverimgs,.nw-artical-img-caption,.nw-artical-share-links-wrapper,.lci_ad_space'`
+const sel_examp_del_4=`'img, svg, figure, form, meta, button, input, picture, video, audio, iframe,.nw-artical-paths,.nw-artical-coverimgs,.nw-artical-img-caption,.nw-artical-share-links-wrapper,.lci_ad_space'`
 
 
-const JS_examp = `$('.post,body p, article p, main p, .main p, #main p').css({'font':'Tahoma','color': '#000000'});//alert("User script")`
+const JS_examp = `//$('.post,body p, article p, main p, .main p, #main p').css({'font':'Tahoma','color': '#000000'});\n\n//alert("User script")`
 const CSS_examp = `
 article,article p, main p, .main p, #main p{
 	font:400 17px/1.4em Tahoma !important;color:#000000 !important
@@ -133,6 +133,9 @@ var host1 = "pbs.org";
 var host2 = "npr.org";
 var host3 = "cnn.com";
 var host4 = "international.la-croix.com";
+
+var host5 = "youtube.com";
+var host6 = "twitter.com";
 
 const data_0 = {
 	init: true,
@@ -149,6 +152,7 @@ const data_0 = {
 	hosts: {},
 	archive_files: {file_1: archive_file_1, file_2: archive_file_2, file_3: archive_file_3, name_1: "archive", name_2: "sport", name_3: "posts"},
 	archive_opt: {Twitter_spec: true,	Twitter_sel_text: true, links: "all"},
+	contextMenu: {add_menu: true, open_in_browser: {on: false, filepath: "C:\\Programs\\Opera\\opera.exe"}, save_archives: true, open_files: false, add: false, search: [{title: "Google search", url: "https://www.google.com/search?q=", on: true}, {title: "Google.pl", url: "https://www.google.pl/search?num=100&hl=pl&q=", on: false}, {title: "Yahoo search", url: "https://search.yahoo.com/search?p=", on: true}, {title: "Bing search",  url: "https://www.bing.com/search?q=", on: true}]},
 	twitter: {}
 }
 
@@ -179,6 +183,22 @@ data_0["hosts"][host4]={
 	"selector": sel_examp_4.trim(),
 	"del": sel_examp_del_4
 }
+
+data_0["hosts"][host5]={
+	"selector": "",
+	"del": "",
+	"CSS": "",
+	"JS": `//Add_video_speed_button(-4,300,"",[function(){var rate=get_speed();alert_txt(rate,3000,40,400,2)},""],["del", "del"],[video_speed.bind(null,1.0), "speed 1x"],[video_speed.bind(null,1.2), "speed 1.2"],[video_speed.bind(null,1.5), "speed 1.5x"],[video_speed.bind(null,2.0), "speed 2.0x"], [set_quality.bind(null,"360p"), "quality 360p"]);\n\n//ShowImageInPopup("noTabKey");`
+}
+
+data_0["hosts"][host6]={
+	"selector": "",
+	"del": "",
+	"CSS": "",
+	"JS": `//Add_video_speed_button(-4,300,"",[function(){var rate=get_speed();alert_txt(rate,3000,40,400,2)},""],["del", "del"],[video_speed.bind(null,1.0), "speed 1x"],[video_speed.bind(null,1.2), "speed 1.2"],[video_speed.bind(null,1.5), "speed 1.5x"],[video_speed.bind(null,2.0), "speed 2.0x"], [set_quality.bind(null,"360p"), "quality 360p"]);\n\n//ShowImageInPopup();`
+}
+
+
 
 data_0["tags"]={
 	"tags1": ["sport","news","politics"],

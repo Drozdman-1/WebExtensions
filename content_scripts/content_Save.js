@@ -31,8 +31,9 @@ function onError(error){
 }
 
 function onSettingsData(message){
-	let host = window.location.hostname;
+	let host = window.location.hostname.replace("www.","");
 	let host0 = "<all>"
+  let obj =	message.data
  	if(message.response==="settings_data"){
 		let nextTabF = message.data["nextTabF"];
 		let	nextTab1 = message.data["nextTab1"];
@@ -60,11 +61,12 @@ function onSettingsData(message){
 			}else{
 				var js = obj["hosts"][host0]["JS"];
 			}
-			eval(js)
+      //browser.runtime.sendMessage({command: "run_JS", script: js})
+			setTimeout(function(js){browser.runtime.sendMessage({command: "run_JS", script: js});}, 700, js);
+			//eval(js)
 		}	
 
 		if(loadCSS){
-			let obj =	message.data
 			if(typeof obj["hosts"][host] !== "undefined" && typeof obj["hosts"][host]["CSS"] !== "undefined" && obj["hosts"][host]["CSS"] !==""){
 				var css_ = obj["hosts"][host]["CSS"];
 			}else{
@@ -119,8 +121,7 @@ function send_to_bg_save_html(text,title){
 
 function getMessage(message, sender, sendResponse){
 	if(message.command === "get_host"){
-		let hostname = window.location.hostname;
-		hostname=hostname.replace("www.","")
+		let hostname = window.location.hostname.replace("www.","");
 		sendResponse({ command: "send_host", hostname: hostname,  href: window.location.href});
 	}else if(message.command === "x_button"){	
 		X_ButtonStart()		
@@ -133,11 +134,10 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
 	if(message.command === "save_html_data") {
 		var selectorJS = message.selector;
 		var del = message.del;
-		var host_JS_code= "$(" + del + ").remove();" + "\n" + selectorJS ;
-		let hostname = window.location.hostname;
-		hostname=hostname.replace("www.","")
-		let data=Save_html(hostname,host_JS_code)
-
+		var del_JS_code = "$(" + del + ").remove();"
+		var host_JS_code =  selectorJS ;
+		let hostname = window.location.hostname.replace("www.","");
+		let data=Save_html(hostname, del_JS_code, host_JS_code)
 		if (data==""){
 			return
 		}
@@ -169,8 +169,14 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }else if (message.command === "script_eval"){
 		let script = message.script
 		eval(script)
+		
   }else if (message.command === "my_alert"){
     alert(message.text)
+		
+  }else if (message.command === "txt_alert"){
+		let args = message.args
+		alert_txt.apply(this, args);
+		
 	}else{
 	
   }
@@ -195,12 +201,12 @@ function onSettingsDataXButt(message){
 
 //============================================
 
-function Save_html(host,host_JS_code){
+function Save_html(host, del_JS_code, host_JS_code){
 
-	var title=document.title, d = new Date(),url=window.location.href;
+	var title=document.title, date = new Date(),url=window.location.href;
 	var charset='<meta charset="utf-8">'
 	var css='body{max-width:700px;margin:auto;font-family: Tahoma; font-size:17px ;line-height: 1.35em}.url{font-size:13px; font-family:Lucida Console; line-height: 1.2em}b > a,b > a:visited{color:#9E0000}';
-	//css= css + 'yel{background-color:#FEFFB6} red{background-color:#FFDEDE} bez{background-color:#F3F0E2;} y_bold{background-color:#FEFFB6;font-weight:700} r_bold{background-color:#FFDEDE;font-weight:700} bez_bold{background-color:#F3F0E2;font-weight:700}'
+	css= css + 'yel{background-color:#FEFFB6} red{background-color:#FFDEDE} bez{background-color:#F3F0E2;} y_bold{background-color:#FEFFB6;font-weight:700} r_bold{background-color:#FFDEDE;font-weight:700} bez_bold{background-color:#F3F0E2;font-weight:700}'
 
 	var sel=document.createElement('div');
 	var sel_head=document.createElement('div');
@@ -251,17 +257,27 @@ function Save_html(host,host_JS_code){
 		$('meta').remove();		
 	}
 
-
+	console.log('save_html del_JS_code ',del_JS_code); 
+	
+	try{
+		eval(del_JS_code); 
+	}catch(e){
+		if(e instanceof SyntaxError){
+			console.log("ERROR eval(del_JS_code)",e.message)
+			alert("delete elements - eval error\n" + e.message);
+		}
+	}
+	
 	if(window.getSelection().toString().length !=0){
-		//$("img,button,video,svg").remove();
 		sel.appendChild(window.getSelection().getRangeAt(0).cloneContents());		
 	}else{
+		console.log('save_html host_JS_code\n' ,host_JS_code)
 		try{
 			eval(host_JS_code); 
 		}catch(e){
 			if(e instanceof SyntaxError){
-				console.log("ERROR eval(host_JS_code)",e.message)
-				alert("eval error" + e.message);
+				console.log("ERROR eval(host_JS_code) selectors",e.message)
+				alert("selectors - eval error" + e.message);
 			}
 		}
 		if(sel.innerHTML===null){
@@ -307,9 +323,11 @@ function Save_html(host,host_JS_code){
 	title=title + ".htm"
 	charset = (charset.length !=0) ? '\n' + charset : '';
 
+	date= date.toString().replace(' (Eastern Daylight Time)','')
 	out= '<!DOCTYPE html><html>\n' + '<head>\n' + '<style>'+css+'</style>'  + charset + '\n<title>' 
 	+ title + '</title>\n</head>\n<body>\n\n' +'<br>'+ sel.innerHTML +'\n\n\n<br><br>\n<hr><div class="url">' + url 
-	+ '<br>\n'+ 'Saved on: ' + d.toLocaleString()+'; &nbsp&nbsp'+Date().substring(25)+time+'</div>\n\n<hr><br><br></body></html>';
+	+ '<br>\n'+ 'Saved on: ' + date +"\n" +time+'</div>\n\n<hr><br><br></body></html>';	
+
 	return {html:out,title:title}
 }
 
@@ -421,6 +439,10 @@ function get_selection_Twitter(tags, type, link, Twit_txt){
 		return
 	}
 
+	var url1= url.split("?");
+	if(url1[0])url=url1[0];
+	
+	
 	var sel_elem=window.getSelection().getRangeAt(0).startContainer.parentNode ;
 	var $par=$(sel_elem).parents("article")
 	//sel=sel_elem.textContent
@@ -504,7 +526,9 @@ function get_selection_Twitter(tags, type, link, Twit_txt){
 		}
 	}else{
 		links = ""
-	}		
+	}
+	
+	sel=sel.replace(/Translate post$/,"")
 	sel = sel + links
 	
 	sel=sel.trim();
