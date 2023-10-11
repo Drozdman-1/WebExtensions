@@ -62,7 +62,7 @@ if(c===false){
 }`; 
 
 
-const sel_all_del=`'img, figure, form, meta, button, input, picture, video, audio, iframe, aside'`
+const sel_all_del=`'img, figure, form, meta, button, input, picture, video, audio, iframe, aside, .tags, [class^="gallery"], [class*="_share"], [class*="share_"], [class*="sharing"], [class*="social-share"], [class*="social(?!Byline)"]'`
 //=============================
 
 const sel_examp_1 = `
@@ -121,7 +121,11 @@ title=title.replace('','')`;  //croix
 const sel_examp_del_4=`'img, svg, figure, form, meta, button, input, picture, video, audio, iframe,.nw-artical-paths,.nw-artical-coverimgs,.nw-artical-img-caption,.nw-artical-share-links-wrapper,.lci_ad_space'`
 
 
-const JS_examp = `//$('.post,body p, article p, main p, .main p, #main p').css({'font':'Tahoma','color': '#000000'});\n\n//alert("User script")`
+const JS_examp = `//start_archive_JS_buttons(-2, 470, "red", ["google","yahoo"]);\n\n
+if(window.location.href.endsWith("mp4")){
+//Add_video_speed_button(-2,300,"",[show_video_speed,""],["del", "del"],[video_speed.bind(null,1.0), "speed 1x"],[video_speed.bind(null,1.2), "speed 1.2"],[video_speed.bind(null,1.5), "speed 1.5x"],[video_speed.bind(null,2.0), "speed 2.0x"], [show_video_speed,"Show speed"]);
+};\n\n//alert("User script")`
+
 const CSS_examp = `
 article,article p, main p, .main p, #main p{
 	font:400 17px/1.4em Tahoma !important;color:#000000 !important
@@ -188,16 +192,15 @@ data_0["hosts"][host5]={
 	"selector": "",
 	"del": "",
 	"CSS": "",
-	"JS": `//Add_video_speed_button(-4,300,"",[function(){var rate=get_speed();alert_txt(rate,3000,40,400,2)},""],["del", "del"],[video_speed.bind(null,1.0), "speed 1x"],[video_speed.bind(null,1.2), "speed 1.2"],[video_speed.bind(null,1.5), "speed 1.5x"],[video_speed.bind(null,2.0), "speed 2.0x"], [set_quality.bind(null,"360p"), "quality 360p"]);\n\n//ShowImageInPopup("noTabKey");`
+	"JS": `//Add_video_speed_button(-2,300,"",[show_video_speed,""],["del", "del"],[video_speed.bind(null,1.0), "speed 1x"],[video_speed.bind(null,1.2), "speed 1.2"],[video_speed.bind(null,1.5), "speed 1.5x"],[video_speed.bind(null,2.0), "speed 2.0x"], [set_quality.bind(null,"360p"), "quality 360p"]);\n\n//ShowImageInPopup();\n\n//"red","green","blue", "viol", "black"\n//start_archive_JS_buttons(-2, 470, "green", ["google","yahoo"]);`
 }
 
 data_0["hosts"][host6]={
 	"selector": "",
 	"del": "",
 	"CSS": "",
-	"JS": `//Add_video_speed_button(-4,300,"",[function(){var rate=get_speed();alert_txt(rate,3000,40,400,2)},""],["del", "del"],[video_speed.bind(null,1.0), "speed 1x"],[video_speed.bind(null,1.2), "speed 1.2"],[video_speed.bind(null,1.5), "speed 1.5x"],[video_speed.bind(null,2.0), "speed 2.0x"], [set_quality.bind(null,"360p"), "quality 360p"]);\n\n//ShowImageInPopup();`
+	"JS": `//"red","green","blue", "viol", "black"\n//start_archive_JS_buttons(-2, 470, "red", ["google","yahoo"]);\n\n//Add_video_speed_button(-2,300,"",[show_video_speed,""],["del", "del"],[video_speed.bind(null,1.0), "speed 1x"],[video_speed.bind(null,1.2), "speed 1.2"],[video_speed.bind(null,1.5), "speed 1.5x"],[video_speed.bind(null,2.0), "speed 2.0x"], [show_video_speed,"Show speed"]);\n\n//ShowImageInPopup();`
 }
-
 
 
 data_0["tags"]={

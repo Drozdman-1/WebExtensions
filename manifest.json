@@ -62,6 +62,10 @@
       "js": ["/content_scripts/content_Save.js"]
     },
     {
+      "matches": ["<all_urls>"],
+      "js": ["/content_scripts/JS_buttons_archive.js"]
+    },
+    {
       "matches": ["https://www.youtube.com/*"],
       "js": ["/content_scripts/content_YT.js"]
     },
@@ -72,7 +76,7 @@
   ],
 
   "sidebar_action": {
-    "default_icon": "icons/Extension_button_SVG_blue.svg",
+    "default_icon": "icons/Ext_button_blue.svg",
     "default_title" : "SidebarDrozd",
     "default_panel": "sidebar/panel.html",
     "open_at_install": false

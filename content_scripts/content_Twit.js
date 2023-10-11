@@ -12,9 +12,9 @@ var prev_Tw_css = {'background':'#E1D8F4','border':'2px solid #D50000'} //#D0EFE
 var prev_Tw_css3 = {'background':'#DBDEF6','border':'2px solid #D50000'}//'color':'green',
 var set_Tw_css = {'background':'#F3EFDD','border':'2px solid #000'}
 var last_text_css ={'color':'#600000','background':'#F3EFDD'}
-
+/* 
 $(document).ready(function(){
-/* 	
+	
 // start from main content script
 	if(window.location.hostname.match('twitter.com|X.com')){
 		setTimeout(function(){ Tw_observer_start()}, 2000)
@@ -23,8 +23,9 @@ $(document).ready(function(){
 	window.addEventListener('dblclick',function(){ //alert() 
 			clean_page()  	 
 	}) 
-	 */
+	 
 })
+*/
 /* 
 function clean_page(){
   $("span:contains('Who to follow')").each(function(){//Dec30 2019

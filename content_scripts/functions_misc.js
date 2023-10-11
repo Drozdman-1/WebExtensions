@@ -111,9 +111,9 @@ const alert_txt = function(text,time,x,y,bg){
 
 //========================================
 
-//	Add_video_speed_button(-4,300,"",[function(){var rate=get_speed();alert(rate)},""],["del", "del"],[video_speed.bind(null,1.0), "speed 1x"],[video_speed.bind(null,1.2), "speed 1.2"],[video_speed.bind(null,1.5), "speed 1.5x"],[video_speed.bind(null,2.0), "speed 2.0x"], [set_quality.bind(null,"360p"), "quality 360p"])		
+//	Add_video_speed_button(-4,300,"",[function(){var rate=get_video_speed();alert(rate)},""],["del", "del"],[video_speed.bind(null,1.0), "speed 1x"],[video_speed.bind(null,1.2), "speed 1.2"],[video_speed.bind(null,1.5), "speed 1.5x"],[video_speed.bind(null,2.0), "speed 2.0x"], [set_quality.bind(null,"360p"), "quality 360p"])		
 
-//	Add_video_speed_button(-4,300,"",[function(){var rate=get_speed();alert_txt(rate,3000,40,400,2)},""],["del", "del"],[video_speed.bind(null,1.0), "speed 1x"],[video_speed.bind(null,1.2), "speed 1.2"],[video_speed.bind(null,1.5), "speed 1.5x"],[video_speed.bind(null,2.0), "speed 2.0x"], [set_quality.bind(null,"360p"), "quality 360p"])		
+//	Add_video_speed_button(-4,300,"",[function(){var rate=get_video_speed();alert_txt(rate,3000,40,400,2)},""],["del", "del"],[video_speed.bind(null,1.0), "speed 1x"],[video_speed.bind(null,1.2), "speed 1.2"],[video_speed.bind(null,1.5), "speed 1.5x"],[video_speed.bind(null,2.0), "speed 2.0x"], [set_quality.bind(null,"360p"), "quality 360p"])		
 
 var Add_video_speed_button = function(x, y, bg, f1a, f1b, f1, f2, f3, f4, f5){
 	if(document.querySelector("#vid_Buttons"))return
@@ -141,7 +141,22 @@ var Add_video_speed_button = function(x, y, bg, f1a, f1b, f1, f2, f3, f4, f5){
 	button_.style.lineHeight="1em"; button_.style.border='2px outset #000';
 	button_.style.fontFamily="Tahoma";  button_.style.fontWeight='700';
 	button_.style.top=y+"px";button_.style.left=x+"px";
-	if(bg){ button_.style.background= bg}		
+	//if(bg){ button_.style.background= bg}		
+
+	if(bg){ 
+		if(bg==="red"){
+			bg = "linear-gradient(90deg, #691616 10%, #AF2525 40%,  #6D0000 80%, #691616 100%)"//red
+		}else if(bg==="green"){
+			bg = "linear-gradient(90deg,  #003110 0%,#004817 25%,#057228 55%,#004817 75%,#003110 100%)"
+		}else if(bg==="blue"){
+			bg = "linear-gradient(90deg,  #001929 0%,#003152 25%,#145683 55%,#003152 75%,#001929 100%)"
+		}else if(bg==="viol"){
+			bg ="linear-gradient(90deg,  #38003A 0%,#5A0B5C 25%,#7D0981 55%,#5A0B5C 75%,#38003A 100%)"
+		}else if(bg==="black"){
+			bg = "linear-gradient(90deg,  #121313 0%,#292B2C 25%,#4E5355 55%,#292B2C 75%,#121313 100%)"
+		}		
+		button_.style.background= bg
+	}		
 
 
 	var el_1a=document.createElement('div'); 
@@ -171,7 +186,7 @@ var Add_video_speed_button = function(x, y, bg, f1a, f1b, f1, f2, f3, f4, f5){
 	el_4.style.margin= "0px 0px -1px 1px";
 	el_5.style.margin= "-2px 0px 3px 1px";	
 
-	//var show_speed=function(){var rate=get_speed();alert(rate) } 
+	//var show_speed=function(){var rate=get_video_speed();alert(rate) } 
 	el_1.oncontextmenu=function(e){ e.preventDefault(); show_speed();}
 	el_2.oncontextmenu=function(e){ e.preventDefault(); show_speed();}
 	el_3.oncontextmenu=function(e){ e.preventDefault(); show_speed();}
@@ -243,7 +258,7 @@ var Add_video_speed_button = function(x, y, bg, f1a, f1b, f1, f2, f3, f4, f5){
 
 //-----
 
-var get_speed = function(){
+var get_video_speed = function(){
 	var rate;
   var videos = document.querySelectorAll("video");
   if(videos && videos.length){
@@ -264,6 +279,10 @@ var get_speed = function(){
 	return rate
 }
 
+var show_video_speed = function(){
+	let rate=get_video_speed();
+	alert_txt(rate,3000,40,400,2)
+}
 
 
 function set_quality(quality){

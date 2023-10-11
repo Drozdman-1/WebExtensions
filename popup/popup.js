@@ -77,12 +77,28 @@ if(document.querySelector("#archive_3")){
 if(document.querySelector("#CSS_style")){
 	document.querySelector("#CSS_style").addEventListener('click', CSS_style_)
 }
-
+/* 
 if(document.querySelector("#blue_button")){
 	document.querySelector("#blue_button").addEventListener('click', ArchiveTextInit)
 }
+ */
+ 
 
+document.addEventListener('click',(e) => {
+	if(e.target.tagName==="DIV" || e.target.tagName==="HTML"){	
+		let tag_inp = document.querySelector("#tag_inp");
+		tag_inp.value=""
+		tag_inp.style.display="inline-block"
+		tag_inp.focus()
+	}
+}) 
 
+document.addEventListener('contextmenu',(e) => {
+	e.preventDefault()
+	if(e.target.tagName==="DIV" || e.target.tagName==="INPUT" || e.target.tagName==="HTML"){
+		document.querySelector("#tag_inp").value=""
+	}
+})
 
 function JS_User_script(){
 	browser.tabs.query({active: true, currentWindow: true}).then((tabs) => {
@@ -115,9 +131,14 @@ function JS_User_exec(message){
 	},onError)	
 }
 
-
-
 function CSS_style_(){
+	browser.tabs.query({active: true, currentWindow: true}).then((tabs) => {
+		browser.tabs.sendMessage(tabs[0].id, {command: "apply_CSS_init"})
+	})		
+}
+
+/* 
+function CSS_style_0(){
 	browser.tabs.query({active: true, currentWindow: true}).then((tabs) => {
 		const sending = browser.tabs.sendMessage(tabs[0].id, {command: "get_host"})
 		sending.then(CSS_apply, onError);
@@ -157,7 +178,7 @@ function CSS_apply(message){
 		}, onError);
 	})
 }
-
+ */
 
 function X_button(){
 	browser.tabs.query({active: true, currentWindow: true}).then((tabs) => {
@@ -260,6 +281,13 @@ function tags_selected(){
 			}
 		}
 	})
+	
+	try{
+		var add_tag=document.querySelector("#tag_inp")
+		//console.log('*** add_tag ',add_tag.value) 
+		if(add_tag.value)tags= tags + " " + add_tag.value ;
+	}catch(err){ }
+	
 	tags= tags + " ";
 	return tags
 } 

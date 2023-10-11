@@ -11,10 +11,15 @@ function tags_populate(){
 		var tags_1 = data["tags"]["tags1"]
 		var tags_2 = data["tags"]["tags2"]
 		var tags_3 = data["tags"]["tags3"]
-	
+		
+		var max_rows = 8;
+		if(typeof data["tags"]["max_rows"]!=="undefined"){
+			max_rows = data["tags"]["max_rows"]
+		}
+
 		let len = Math.max(tags_1.length,tags_2.length,tags_3.length)
-		if(len>8){
-			var len2=8;
+		if(len>max_rows){
+			var len2=max_rows;
 		}else{
 			var len2=len
 		}
@@ -42,7 +47,7 @@ function tags_populate(){
 			el.addEventListener("mousedown", 
 				function(e){
 					e.preventDefault();
-					if (this.value !== "---"){//separator
+					if (this.value !== "" && this.value !== "---"){//separator
 						this.selected = !this.selected;
 					}
 					return false;

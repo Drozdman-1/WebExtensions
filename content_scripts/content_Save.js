@@ -2,7 +2,11 @@
   if (window.SaveRun) {
     return;
   }
-  window.SaveRun = true;
+	
+window.SaveRun = true;
+
+var css_style;
+
 
 const next_prev_tabF = (e) => {
 	if(e.key==="F1"){
@@ -35,6 +39,7 @@ function onSettingsData(message){
 	let host0 = "<all>"
   let obj =	message.data
  	if(message.response==="settings_data"){
+		window.Dr_settings = message.data;
 		let nextTabF = message.data["nextTabF"];
 		let	nextTab1 = message.data["nextTab1"];
 		let	loadJS = message.data["loadJS"];
@@ -62,17 +67,20 @@ function onSettingsData(message){
 				var js = obj["hosts"][host0]["JS"];
 			}
       //browser.runtime.sendMessage({command: "run_JS", script: js})
-			setTimeout(function(js){browser.runtime.sendMessage({command: "run_JS", script: js});}, 700, js);
+			setTimeout(function(js){browser.runtime.sendMessage({command: "run_JS", script: js});}, 800, js);
 			//eval(js)
 		}	
-
+		
+		
+		if(typeof obj["hosts"][host] !== "undefined" && typeof obj["hosts"][host]["CSS"] !== "undefined" && obj["hosts"][host]["CSS"] !==""){
+			css_style = obj["hosts"][host]["CSS"];
+		}else{
+			css_style = obj["hosts"][host0]["CSS"];
+		}
+		
 		if(loadCSS){
-			if(typeof obj["hosts"][host] !== "undefined" && typeof obj["hosts"][host]["CSS"] !== "undefined" && obj["hosts"][host]["CSS"] !==""){
-				var css_ = obj["hosts"][host]["CSS"];
-			}else{
-				var css_ = obj["hosts"][host0]["CSS"];
-			}
-			browser.runtime.sendMessage({command: "apply_CSS", style: css_, url: window.location.href, hostname: window.location.hostname})
+			browser.runtime.sendMessage({command: "apply_CSS", style: css_style, url: window.location.href, hostname: window.location.hostname})
+			window.DrStyleApplied=true;
 		}
 		
 		if(loadX){
@@ -89,7 +97,8 @@ function onSettingsData(message){
 				
 				if(Twitter_last_but){
 					if(window.parent==window){
-						Menu_Button(document.querySelector("body"), bg_to_set, bg_to_get);
+						setTimeout(function(){ Menu_Button(document.querySelector("body"), bg_to_set, bg_to_get);}, 1000); 
+						//Menu_Button(document.querySelector("body"), bg_to_set, bg_to_get);
 					}
 				}
 				
@@ -100,9 +109,14 @@ function onSettingsData(message){
 							setTimeout(function(){ Tw_observer_start()}, 5000)
 						}
 					}
-				})				
+				})			
 			}
 		}
+		
+		window.Dr_arch={}
+		window.Dr_arch["name_1"] = message.data["archive_files"]["name_1"]
+		window.Dr_arch["name_2"] = message.data["archive_files"]["name_2"]
+		window.Dr_arch["name_3"] = message.data["archive_files"]["name_3"];
 	} 
 } 
 
@@ -161,6 +175,9 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
 	}else if(message.command === "archive_saved"){	
 		alert_txt("Saved",3000,(window.innerWidth -160),40,3) 
+		if(document.querySelector("#Add_buttons_1")){//if JS archive buttons on
+			alert_txt("Saved",3000,50,470,3) 
+		}
 		
 	}else if(message.command === "archive_error"){	
 		console.log("ping from Python script: error",message.error);
@@ -176,6 +193,14 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }else if (message.command === "txt_alert"){
 		let args = message.args
 		alert_txt.apply(this, args);
+	}else if (message.command === "apply_CSS_init"){
+		if(!window.DrStyleApplied){
+			browser.runtime.sendMessage({command: "apply_CSS", style: css_style, url: window.location.href, hostname: window.location.hostname})
+			window.DrStyleApplied=true
+		}else if(window.DrStyleApplied===true){
+			browser.runtime.sendMessage({command: "remove_CSS", style: css_style, url: window.location.href, hostname: window.location.hostname})
+			window.DrStyleApplied=false			
+		}
 		
 	}else{
 	
@@ -317,10 +342,13 @@ function Save_html(host, del_JS_code, host_JS_code){
 	sel.innerHTML=sel.innerHTML.replace(/<\/div>[\s\n]*?/g,'</div>\n').replace(/<\/p>[\s\n]*?/g,'</p>\n').replace(/<\/span>[\s\n]*?/g,'</span>\n').replace(/<\/li>/g,'</li>\n')
 	sel.innerHTML=sel.innerHTML.replace(/<\/div>[\s]+<\/div>/g,'</div></div>').replace(/<div>[\s]+<div>/g,'<div><div>')
 
-
 	title=title_replace(title);
 	title = title + ' •[' + window.location.hostname.toString().replace('www.','') + ']';
-	title=title + ".htm"
+	title=title + ".html"
+	
+	//console.log('*** save title', title) 
+	//console.log('*** save  date, time', date , time) 
+	//console.log('*** save ', sel.innerHTML) 
 	charset = (charset.length !=0) ? '\n' + charset : '';
 
 	date= date.toString().replace(' (Eastern Daylight Time)','')
@@ -333,13 +361,21 @@ function Save_html(host, del_JS_code, host_JS_code){
 
 
 function title_replace(title){ 
-	title = title.replace(/\s\s+/,' ');
+	title = title.replace(/\s\s+/g,' ');
 	title = title.replace(/,(?:”|\"|')/g,'”,').replace(/\.(?:”|\"|')/g,'”.')
-	title = title.replace(/:/g,' - ').replace(/\x22/g,'”').replace(/\*/g,'•').replace(/\|/g,'｜').replace(/\\/g,'-').replace(/\//g,' ∕ ').replace(/\?/g,'¿').replace(/–|—/g,'-').replace(/&#8230;/g,'...')
+	title = title.replace(/:/g,' - ').replace(/\x22/g,"'").replace(/\*/g,'•').replace(/\|/g,'｜').replace(/\\/g,'-').replace(/\//g,' ∕ ').replace(/\?/g,'¿').replace(/–|—/g,'-').replace(/&#8230;/g,'...')
+	title = title.replace(/&#039;/g,"'").replace(/#/g,"'").replace(/\n/g,"");
+	//title=escapeUnicode(title)
 	return title
 }
-
-
+/* 
+function escapeUnicode(str) {//unicode string
+    return str.replace(/[^\0-~]/g, function(ch) {
+        //return "\\u" + ("000" + ch.charCodeAt().toString(16)).slice(-4); //hex
+				return "\\u" + ("000" + ch.charCodeAt());
+    });
+}
+ */
 var remove_attr=function(div){// exclude href src class
 	var divs= div.querySelectorAll("*");
 	for (var j=0; j<=divs.length;j++){ 
@@ -481,6 +517,12 @@ function get_selection_Twitter(tags, type, link, Twit_txt){
 	
 
 	var $name=$par.find('[data-testid="User-Name"] a')
+	var $timeEl=$par.find('time')
+	var url_post=$timeEl.parent().attr("href") //Oct7 2023
+	if(url_post)
+		url = "https://twitter.com" + url_post 
+	
+	var $name=$par.find('[data-testid="User-Name"] a')
 	var time=$par.find('time').attr("datetime")
   title=$name.text()+" "+time
 	
@@ -491,6 +533,24 @@ function get_selection_Twitter(tags, type, link, Twit_txt){
 				sel=sel +"\n---art---\n"+txt2
 		}
 	}
+
+  $art.each(function(){
+    var $link=$(this).find('[href^="https://t.co/"]');
+    var url= $link.attr("href");
+		console.log('*** link', url) 
+    if(url){
+			sel=sel +"\n"+url+"\n"
+    }	
+  });
+  $art.each(function(){
+    var $link=$(this).find('[data-testid^="card.layoutLarge.media"] a');
+    var url= $link.attr("href");
+		console.log('*** link', url) 
+    if(url){
+			sel=sel +"\n"+url+"\n"
+    }	
+  });
+
 
 	var $retw=$par.find('[aria-labelledby^="id__"]') 
 	if (typeof $retw[0]!="undefined"){

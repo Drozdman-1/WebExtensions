@@ -197,6 +197,27 @@ var my_popup={
 				}
 			}else{				
 			}
+			
+		}else if(window.location.hostname.match("youtube.com")){
+			
+			if(elem.tagName==="IMG"){
+				if(elem.parentNode.tagName==="YT-IMAGE"){
+					//console.log('***youtube "YT-IMAGE"', elem.tagName, elem.src) 
+					try{
+						url = elem.src
+						url=url.split("?")[0]
+						my_popup.image(url);
+					}catch(err){ }
+				}else{
+					/* 
+					try{
+						url = elem.src 
+						url=url.split("?")[0]
+						//my_popup.image(url);
+					}catch(err){ }
+					 */
+				}
+			}
 		}
 	},
 

@@ -163,7 +163,8 @@ button:hover {  background-color: #cff2f2;background:linear-gradient(0deg, #4505
 }
 
 #reset_scroll,#reset_tags{
-	visibility:hidden;
+	/* visibility:hidden; */
+  opacity:0.3;
 }
 
 #reset_tags{
@@ -223,4 +224,8 @@ option[value="✔"] {
 /* 	font-size:10px; */
 }
 
+#tag_inp{
+	display:none;
+	font-size:11px;
+}
 

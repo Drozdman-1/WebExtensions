@@ -32,7 +32,9 @@ browser.storage.local.get().then(data => {
 		
 		Add_contextMenus(data)
 	}
-}, onError);
+},  (error) => { 
+		console.error(`scratchpadOpen_B twitter error: ${error}`);
+	});
 
 
 //================== archive text, external
@@ -89,29 +91,24 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
 			};
 		}, onError);
 
-  }else if(message.command === "apply_CSS"){
-		console.log('bg, apply_CSS',message, sender.tab);
-		let href = sender.tab.url;
+  }else if(message.command === "remove_CSS"){
+		//let href = sender.tab.url;
+		//let host = message.hostname
 		let css_ = message.style
-		let host = message.hostname
 		
-		browser.storage.session.get().then(data_sess => {
-			if(typeof data_sess.init === "undefined"){
-				data_sess = {
-					init: true
-				};
-				browser.storage.session.set(data_sess);
-			}
-			if(!data_sess[href] || data_sess[href]==false){
-				browser.tabs.insertCSS(sender.tab.id, {code: css_})
-				data_sess[href] = true			
-			}
-			browser.storage.session.set(data_sess);
-		}, onError);
+		browser.tabs.removeCSS(sender.tab.id, {code: css_})
+		
+  }else if(message.command === "apply_CSS"){
+		//console.log('bg, apply_CSS',message, sender.tab);
+		//let href = sender.tab.url;
+		//let host = message.hostname
+		let css_ = message.style
+		
+		browser.tabs.insertCSS(sender.tab.id, {code: css_})
 
   }else if(message.command === "run_JS"){
 		let js = message.script;
-		console.log('*** bg run_JS', js) 
+		//console.log('*** bg run_JS', js) 
 		browser.tabs.query({active: true}).then((tabs) => {
 			browser.tabs.executeScript(tabs[0].id, {code: js }).then((result) => {
 			}, (error) => {
@@ -144,7 +141,7 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
 		})
 		
   }else if(message.command === "Scr_remove_CSS"){
-		console.log('bg, remove_CSS',message);		
+		//console.log('bg, remove_CSS',message);		
 		browser.tabs.query({active: true}).then((tabs) => {
 			browser.tabs.removeCSS(tabs[0].id, {code: Scr_lastStyleCSS})
 		})
@@ -166,6 +163,23 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
 		
   }else if(message.command === "archive_text_send"){
 		ArchiveText(message)
+		
+  }else if(message.command === "JS_archive_text"){
+		let i = message.which;
+		let tags = message.tags;
+		save_archive(i, tags)
+
+  }else if(message.command === "JS_archive_add"){
+		let i = message.which;	
+		add_archive_(i)
+		
+  }else if(message.command === "JS_archive_add_url"){
+		let i = message.which;
+		add_archive_with_url(i)
+		
+  }else if(message.command === "JS_archive_open"){
+		let i = message.which;
+		open_archive_file(i)
 		
   }else if(message.command === "open_file_init"){
 		var obj={open_file: "open_file", path: message.filepath}
@@ -216,8 +230,9 @@ const BOM = new Uint8Array([0xEF,0xBB,0xBF]);// UTF-8 BOM
 
 function saveTextToFile(fileContents,filename){
 	console.log("bg saveTextToFile:",filename);
+
 	if(typeof filename==="undefined"){
-		var filename="test.htm";		
+		var filename="saved.htm";		
 	}
 	if(typeof fileContents==="undefined"){
 		a1("Error. No data to save")
@@ -229,13 +244,41 @@ function saveTextToFile(fileContents,filename){
 		type: "text/plain;charset=UTF-8"
 	});
 	var url = URL.createObjectURL(blob);	
+	
+	filename= filename_(filename)
+	
   var data = {
     filename: filename,
     url: url,
     saveAs: true
   };
-	browser.downloads.download(data,onError)
+/* 	
+	try{
+		browser.downloads.download(data,(error) => {console.error(`saveTextToFile download error: ${error}`,error);})
+	}catch(err){
+		console.error(`saveTextToFile download catch error: ${err}`);
+		filename="name error  " + escape(filename)
+		filename=filename.replace(/%20/g," ").replace(/%5D/g,"]").replace(/%2C/g,",").replace(/%3F/g,"¿").replace(/%3B/g,";").replace(/%27|%22/g,"'")
+		filename=filename.replace(/%5B/g,"[").replace(/%5B/g,"[").replace(/%u2022/g,"•")
+		data.filename=filename
+		browser.downloads.download(data, (error) => { 
+			console.error(`saveTextToFile error2: ${error}`);
+		})		
+	}
+	 */
+
+	browser.downloads.download(data,(error) => {
+		console.error(`saveTextToFile error: ${error}`, error);	 
+	})
+
 }
+
+function filename_(filename){
+	filename=escape(filename)
+	filename=filename.replace(/%20/g," ").replace(/%5D/g,"]").replace(/%2C/g,",").replace(/%3F/g,"¿").replace(/%3B/g,";").replace(/%27|%22/g,"'")
+	filename=filename.replace(/%5B/g,"[").replace(/%5B/g,"[").replace(/%u2022/g,"•")
+	return filename
+} 
 
 
 function onError(error){ 
@@ -285,7 +328,9 @@ function prevTab(){
 function Save_text_(){
 	browser.tabs.query({active: true, currentWindow: true}).then((tabs) => {
 		const sending = browser.tabs.sendMessage(tabs[0].id, {command: "get_host"})
-		sending.then(Save_text_data, onError);
+		sending.then(Save_text_data, (error) =>{
+			console.log("Save_text_ error " + error); 
+		});
 	})
 }
 
@@ -300,14 +345,17 @@ function Save_text_data(message){
 			var selector = obj["hosts"][host0]["selector"];
 			var del = obj["hosts"][host0]["del"];
 		}
+		
     browser.tabs.query({active: true, currentWindow: true}).then((tabs) => {
 			browser.tabs.sendMessage(tabs[0].id, {
-				command: "save_text_data",
+				command: "save_html_data",
 				selector: selector,
 				del: del
 				})
 		})
-	},onError)	
+	},(error) => { 
+	 console.error(`Save_text_data error: ${error}`);
+	})	
 }
 
 
@@ -316,7 +364,9 @@ function Save_text_data(message){
 const APPLICABLE_PROTOCOLS = ["http:", "https:"];
 
 function save_from_address_bar(){// pageAction save
-	browser.tabs.query({currentWindow: true,active: true}).then(Save_text_).catch(onError);
+	browser.tabs.query({currentWindow: true,active: true}).then(Save_text_).catch((error) =>{
+	console.log("save_from_address_bar" + error); 
+});
 }
 
 function protocolIsApplicable(url) {
@@ -409,7 +459,9 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
 			})
 		// sendResponse({command: "give_last",name: name,id: id,id2: id2});	
 		 			 
-		}).catch(onError);
+		}).catch((error) => { 
+		console.error(`onMessage.addListener twitter error: ${error}`);
+	});
 		
   }else if(message.command === "get_last_by_text"){
 		let name= message.name;			
@@ -430,7 +482,9 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
 			})
 		// sendResponse({command: "give_last",name: name,id: id,id2: id2});	
 		 			 
-		}).catch(onError);		
+		}).catch((error) => { 
+		console.error(`get_last_by_text twitter error: ${error}`);
+	});		
 	
   }else if(message.command === "set_last"){
 		let name= message.name;
@@ -479,13 +533,14 @@ function open_url_in_browser(browser_path, url){
 	port.postMessage(obj);	
 }
 
-function save_archive(i){
+function save_archive(i, tags){
 	let which = "archive_" + i
+	if(typeof tags==="undefined")tags="";
 	browser.storage.local.get().then(data => {
 		let links=data["archive_opt"]["links"];
 		let obj = data["archive_opt"];			
 		browser.tabs.query({active: true, currentWindow: true}).then((tabs) => {
-			browser.tabs.sendMessage(tabs[0].id, {command: "archive_text_init", which: which, tags: "", type: "", type_2: obj , links: links})
+			browser.tabs.sendMessage(tabs[0].id, {command: "archive_text_init", which: which, tags: tags, type: "", type_2: obj , links: links})
 		}).then(() => {	window.close();});
 	})	
 }
@@ -527,7 +582,7 @@ function open_search_tab(txt, url){
 const MENU_OPEN_PAGE="open_url_in_browser"
 const MENU_OPEN_PAGE_n="Open with chosen browser";
 const MENU_OPEN_LINK="open_link_url_in_default"
-const MENU_OPEN_LINK_n="Open link url with chosen browser";
+const MENU_OPEN_LINK_n="Open link with chosen browser";
 const MENU_DEL="delete_element"
 const MENU_DEL_n="Delete element"
 
@@ -569,6 +624,36 @@ function Add_contextMenus(data){
 	MENU_OPEN_FILE_2_n="Open " + data["archive_files"]["name_2"] + " file"; 
 	MENU_OPEN_FILE_3_n="Open " + data["archive_files"]["name_3"] + " file";
 
+	
+	if(obj["open_in_browser"]["on"]){
+		browser.contextMenus.create({
+			id: MENU_OPEN_PAGE,
+			title: MENU_OPEN_PAGE_n,
+			contexts: ['page'],
+			icons: {
+				"16": "icons/opera.png",
+				"32": "icons/opera.png"
+			},			
+			onclick(info, tab) {
+				open_url_in_browser(browser_path, info.pageUrl)
+			}
+		});		
+		
+		browser.contextMenus.create({
+			id: MENU_OPEN_LINK,
+			title: MENU_OPEN_LINK_n,
+			contexts: ['link'],
+			icons: {
+				"16": "icons/opera.png",
+				"32": "icons/opera.png"
+			},
+			onclick(info, tab) {
+				open_url_in_browser(browser_path, info.linkUrl)
+			}
+		});
+	}
+	
+	
 	browser.contextMenus.create({
 		id: "MENU_SEARCH_Google_link",
 		title: "Google search",
@@ -651,34 +736,7 @@ function Add_contextMenus(data){
 			contexts: ['selection'],
 		}
 	);
-	
-	if(obj["open_in_browser"]["on"]){
-		browser.contextMenus.create({
-			id: MENU_OPEN_PAGE,
-			title: MENU_OPEN_PAGE_n,
-			contexts: ['page'],
-			icons: {
-				"16": "icons/opera.png",
-				"32": "icons/opera.png"
-			},			
-			onclick(info, tab) {
-				open_url_in_browser(browser_path, info.pageUrl)
-			}
-		});		
-		
-		browser.contextMenus.create({
-			id: MENU_OPEN_LINK,
-			title: MENU_OPEN_LINK_n,
-			contexts: ['link'],
-			icons: {
-				"16": "icons/opera.png",
-				"32": "icons/opera.png"
-			},
-			onclick(info, tab) {
-				open_url_in_browser(browser_path, info.linkUrl)
-			}
-		});
-	}
+
 	
 	browser.contextMenus.create({
 		id: MENU_DEL,
@@ -895,6 +953,27 @@ function Add_contextMenus(data){
   });
 	
 	browser.contextMenus.create({
+		id: "MENU_scratchpad",
+		title: "Scratchpad",
+		contexts: ['browser_action'],
+		icons: {
+			"16": "icons/Scratchpad.png",
+			"32": "icons/Scratchpad.png"
+		},		
+		onclick(info, tab) {
+			scratchpadOpen_B()
+		},
+	});	
+	
+	browser.menus.create(
+		{
+			id: "separator-21",
+			type: "separator",
+			contexts: ['browser_action'],
+		}
+	);	
+		
+	browser.contextMenus.create({
 		id: "MENU_OPEN_FILE_1",
 		title: MENU_OPEN_FILE_1_n,
 		contexts: ['browser_action'],
@@ -933,6 +1012,25 @@ function Add_contextMenus(data){
 		},
 	});		
 }
+
+
+function scratchpadOpen_B(){
+  let popupURL = browser.extension.getURL("scratchpad/Scratchpad.html");
+
+  let creating = browser.windows.create({
+    url: popupURL,
+    type: "popup",
+		titlePreface: "Scratchpad. JS, CSS",
+    height: 700,
+    width: 630,
+		left: 725,
+		top: 200
+  });
+  creating.then(onCreated, (error) => { 
+		console.error(`scratchpadOpen_B twitter error: ${error}`);
+	});
+} 
+
 
 /* 
 browser.contextMenus.onClicked.addListener(function(info) {
