@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Drozd-Tools",
-  "version": "1.1",
+  "version": "1.21",
   "description": "Save selection as html, archive text, User JS, CSS,...",
   "browser_specific_settings": {
     "gecko": {

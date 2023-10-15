@@ -1015,7 +1015,7 @@ function Add_contextMenus(data){
 
 
 function scratchpadOpen_B(){
-  let popupURL = browser.extension.getURL("scratchpad/Scratchpad.html");
+  let popupURL = browser.runtime.getURL("scratchpad/Scratchpad.html");
 
   let creating = browser.windows.create({
     url: popupURL,
@@ -1029,23 +1029,7 @@ function scratchpadOpen_B(){
   creating.then(onCreated, (error) => { 
 		console.error(`scratchpadOpen_B twitter error: ${error}`);
 	});
-} 
-
-
-/* 
-browser.contextMenus.onClicked.addListener(function(info) {
-  if(info.menuItemId === MENU_OPEN_PAGE){	
-		var obj={open_url: "open_url", path: info.pageUrl, browser_path: browser_path}
-		port.postMessage(obj);
-  }else if(info.menuItemId === MENU_OPEN_LINK){
-		var obj={open_url: "open_url", path: info.linkUrl, browser_path: browser_path}
-		port.postMessage(obj);
-  }
-});
- */
-
-//================= 
-
+}
 
 
 

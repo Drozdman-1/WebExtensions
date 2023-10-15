@@ -143,6 +143,19 @@ var my_popup={
 					my_popup.image(url);
 					which="4"
 				}catch(err){ }
+				
+
+			}else if(elem.getAttribute("data-testid") && elem.getAttribute("data-testid")==="Tweet-User-Avatar"){
+				try{
+					url=elem.querySelector("img")
+					url=url.getAttribute("src")	
+					url=url.replace("_normal","")		
+					url=url.replace("_mini","")				
+					my_popup.image(url);
+					which="5"
+				}catch(err){ }				
+				
+				
 			}
 			
 		}else if(window.location.hostname.match("youtube.com")){
@@ -183,6 +196,7 @@ var my_popup={
 			 } 
 
 		}else if(window.location.hostname.match("twitter.com")){
+			//console.log('***mouse_over_2 elem ', elem) 
 			if(tag =="img"){
 				if(elem.classList.contains('css-9pa8cd')){
 					var url=elem.src 
@@ -195,9 +209,33 @@ var my_popup={
 					my_popup.image(url);
 				}else{
 				}
+				
+			}else if(elem.getAttribute("data-testid") && elem.getAttribute("data-testid")==="Tweet-User-Avatar"){//??
+					try{
+						url=elem.querySelector("img")
+						url=url.getAttribute("src")	
+						url=url.replace("_normal","")		
+						url=url.replace("_mini","")				
+						my_popup.image(url);
+						which="5"
+					}catch(err){ }				
+
+			}else if(elem.tagName==="HEADER"){
+					//console.log('*** elem innerHTML', elem.innerHTML) 
+					try{
+						url=elem.parentNode.querySelector("img")
+						url=url.getAttribute("src")	
+						url=url.replace("_normal","")		
+						url=url.replace("_mini","")				
+						my_popup.image(url);
+						which="5"
+					}catch(err){ }					
+				
 			}else{				
 			}
-			
+
+	
+				
 		}else if(window.location.hostname.match("youtube.com")){
 			
 			if(elem.tagName==="IMG"){

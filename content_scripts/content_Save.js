@@ -171,7 +171,8 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
 		}else{		
 			text=get_selection(tags, type, link);
 		}
-		browser.runtime.sendMessage({command: "archive_text_send", text: text, which: message.which})				
+		if(text!==null)
+			browser.runtime.sendMessage({command: "archive_text_send", text: text, which: message.which})				
 
 	}else if(message.command === "archive_saved"){	
 		alert_txt("Saved",3000,(window.innerWidth -160),40,3) 
@@ -404,7 +405,7 @@ function get_selection(tags, type, link){
 	if(window.getSelection().toString()=="" && !window.location.host.match('youtube.com')){
 		no_selection=true
 		alert('No selection') 	
-		return
+		return null
 	}
 
 	sel_div.appendChild(window.getSelection().getRangeAt(0).cloneContents());
@@ -472,7 +473,7 @@ function get_selection_Twitter(tags, type, link, Twit_txt){
 	if(window.getSelection().toString()==""){
 		no_selection=true
 		alert('No selection') 	
-		return
+		return null
 	}
 
 	var url1= url.split("?");
@@ -534,6 +535,7 @@ function get_selection_Twitter(tags, type, link, Twit_txt){
 		}
 	}
 
+
   $art.each(function(){
     var $link=$(this).find('[href^="https://t.co/"]');
     var url= $link.attr("href");
@@ -542,6 +544,7 @@ function get_selection_Twitter(tags, type, link, Twit_txt){
 			sel=sel +"\n"+url+"\n"
     }	
   });
+
   $art.each(function(){
     var $link=$(this).find('[data-testid^="card.layoutLarge.media"] a');
     var url= $link.attr("href");
